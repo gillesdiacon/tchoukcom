@@ -21,6 +21,9 @@ body {
     height: 100%;
     line-height: 17px;
 }
+p {
+    margin-top: 10px;
+}
 .clear {
     clear: both;
 }
