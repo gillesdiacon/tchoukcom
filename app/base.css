@@ -92,24 +92,6 @@ body {
 #login a:hover {
     color: #000;
 }
-#search {
-    float: left;
-    margin: 0 0 0 10px;
-    padding: 0;
-    width: 170px;
-}
-#search form {
-    margin: 0;
-}
-#search input {
-    margin: 0;
-    padding: 0;
-    vertical-align: middle;
-}
-#search #siteSearchInput {
-    padding: 2px;
-    width: 130px;
-}
 #globalMenu {
     margin: 0 0 0 360px;
     position: absolute;
@@ -190,6 +172,24 @@ body {
 #languageMenu a:hover, #languageMenu li.active a {
     background-image: url("images/lang_act.png");
 }
+
+#col-left {
+    float: left;
+    margin-right: 10px;
+    width: 180px;
+}
+
+#col-center {
+    float: left;
+    width: 570px;
+}
+
+#col-right {
+    float: left;
+    margin-left: 10px;
+    width: 230px;
+}
+
 #footerWrap {
     bottom: 0;
     margin: 0;
