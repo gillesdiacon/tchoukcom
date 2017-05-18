@@ -5,6 +5,7 @@ angular.module('tpApp', [
   'ngRoute',
   'tpApp.shop',
   'tpApp.conditions',
+  'tpApp.contact',
   'tpApp.version'
 ]).
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {

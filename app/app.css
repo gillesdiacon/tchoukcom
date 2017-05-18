@@ -79,9 +79,6 @@
     width: 88px;
 }
 .containerWithTitle .titleText {
-    padding: 0;
-}
-.containerWithTitle .titleText a {
     color: #ffffff;
     display: block;
     font-size: 34px;
@@ -94,12 +91,12 @@
 .containerWithTitle .titleText a:hover {
     color: #464545;
 }
-#conditionsContainer {
+#pageContainer {
     padding-bottom: 10px;
     padding-top: 80px;
     padding-left: 20px;
 }
-#conditionsContainer ul {
+#pageContainer ul {
     list-style-type: none;
     margin-left: 20px;
 }

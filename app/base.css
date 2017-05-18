@@ -24,6 +24,9 @@ body {
 p {
     margin-top: 10px;
 }
+a {
+    text-decoration: none;
+}
 .clear {
     clear: both;
 }
