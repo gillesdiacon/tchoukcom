@@ -58,30 +58,30 @@
     color: #f07b0e;
     font-weight: bold;
 }
-.container .titleContainer {
+.containerWithTitle .titleContainer {
     padding-left: 30px;
     position: absolute;
     top: 10px;
     z-index: 100;
 }
-.container .titleLeft {
+.containerWithTitle .titleLeft {
     background-image: url("images/titleLeft_big.png");
     height: 82px;
     width: 42px;
 }
-.container .titleCenter {
+.containerWithTitle .titleCenter {
     background-image: url("images/titleCenter_big.png");
     height: 82px;
 }
-.container .titleRight {
+.containerWithTitle .titleRight {
     background-image: url("images/titleRight_big.png");
     height: 82px;
     width: 88px;
 }
-.container .titleText {
+.containerWithTitle .titleText {
     padding: 0;
 }
-.container .titleText a {
+.containerWithTitle .titleText a {
     color: #ffffff;
     display: block;
     font-size: 34px;
@@ -91,7 +91,7 @@
     padding-right: 10px;
     padding-top: 20px;
 }
-.container .titleText a:hover {
+.containerWithTitle .titleText a:hover {
     color: #464545;
 }
 #conditionsContainer {
