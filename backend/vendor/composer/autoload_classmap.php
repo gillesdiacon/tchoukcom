@@ -6,9 +6,9 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'TcBern\\Model\\Category' => $baseDir . '/private/models/Category.php',
     'TcBern\\Model\\Group' => $baseDir . '/private/models/Group.php',
     'TcBern\\Model\\Identity' => $baseDir . '/private/models/Identity.php',
-    'TcBern\\Model\\Info' => $baseDir . '/private/models/Info.php',
     'TcBern\\Model\\Internationalisation' => $baseDir . '/private/models/Internationalisation.php',
     'TcBern\\Model\\Position' => $baseDir . '/private/models/Position.php',
     'TcBern\\Model\\Profile' => $baseDir . '/private/models/Profile.php',

@@ -8,7 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     $vendorDir . '/symfony/polyfill-mbstring/bootstrap.php',
     $vendorDir . '/paragonie/random_compat/lib/random.php',
-    $vendorDir . '/illuminate/support/helpers.php',
     $vendorDir . '/nikic/fast-route/src/functions.php',
+    $vendorDir . '/illuminate/support/helpers.php',
     $baseDir . '/private/dbConfig.php',
 );

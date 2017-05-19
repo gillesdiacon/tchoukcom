@@ -2,14 +2,14 @@
 
 use Illuminate\Database\Eloquent\Model;
 
-class Info extends Model {
+class Category extends Model {
 
     /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'info';
+    protected $table = 'category';
 
-    // 'id', 'created_at' and 'updated_at' columns are automatically added by Eloquent
+    public $timestamps = false;
 }

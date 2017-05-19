@@ -12,7 +12,7 @@ require __DIR__ . '/../vendor/autoload.php';
 
 $slimSettings = array('determineRouteBeforeAppMiddleware' => true);
 $slimConfig = array('settings' => $slimSettings);
-$app = new \Slim\App(['settings' => ['determineRouteBeforeAppMiddleware' => true]]);
+$app = new \Slim\App(['settings' => ['determineRouteBeforeAppMiddleware' => true, 'displayErrorDetails' => true]]);
 
 $c = $app->getContainer();
 $c['errorHandler'] = function ($c) {
@@ -80,7 +80,7 @@ $headerMw = function($request, $response, $next) {
 
 // list of authorized entities
 $authorizedEntities = array(
-    "infos" => "TcBern\\Model\\Info",
+    "categories" => "TcBern\\Model\\Category",
     "internationalisation" => "TcBern\\Model\\Internationalisation",
     "identities" => "TcBern\\Model\\Identity",
     "users" => "TcBern\\Model\\User");
@@ -165,6 +165,25 @@ $app->post(
     }
 )->add($tokenMw);
 
+
+
+$app->get(
+    '/api/shopcategories/{categoryId}',
+    function(Request $request, Response $response, $args) {
+
+        $categoryId = $args['categoryId'];
+        if($categoryId == ''){
+            $categoryId = 0;
+        }
+
+        $response->getBody()->write(json_encode(array("categoryId" => $categoryId)));
+        return $response;
+    }
+)->add($headerMw);
+
+
+
+
 $app->get(
     '/api/committee',
     function(Request $request, Response $response) {
@@ -193,6 +212,7 @@ $app->get(
         $entity = $args['entity'];
         $objects = $authorizedEntities[$entity]::all();
         $response->getBody()->write($objects->toJson());
+        //$response->getBody()->write(json_encode(array("entity" => $entity)));
         
         return $response;
     }
