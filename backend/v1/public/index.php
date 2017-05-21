@@ -168,15 +168,11 @@ $app->post(
 
 
 $app->get(
-    '/api/shopcategoriess/{rootCategoryId}',
+    '/api/categoriess',
     function(Request $request, Response $response, $args) {
 
-        $rootCategoryId = $args['rootCategoryId'];
-        if($rootCategoryId == ''){
-            $rootCategoryId = 10;
-        }
-
-        $categories = TcBern\Shop\ShopCategory::where('parent_id', '10')->with('subCategories')->get();
+        $rootCategoryId = 10;
+        $categories = TcBern\Model\Category::where('parent_id', $rootCategoryId)->with('subCategories')->get();
 
         $response->getBody()->write($categories->toJson());
         return $response;

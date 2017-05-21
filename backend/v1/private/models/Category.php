@@ -1,8 +1,8 @@
-<?php namespace TcBern\Shop;
+<?php namespace TcBern\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ShopCategory extends Model {
+class Category extends Model {
 
     /**
      * The database table used by the model.
@@ -14,6 +14,6 @@ class ShopCategory extends Model {
     public $timestamps = false;
 
     public function subCategories() {
-        return $this->hasMany('TcBern\Shop\ShopCategory','parent_id','id') ;
+        return $this->hasMany('TcBern\Model\Category','parent_id','id') ;
     }
 }
