@@ -15,15 +15,15 @@ $slimConfig = array('settings' => $slimSettings);
 $app = new \Slim\App(['settings' => ['determineRouteBeforeAppMiddleware' => true, 'displayErrorDetails' => true]]);
 
 $c = $app->getContainer();
-$c['errorHandler'] = function ($c) {
-    return function ($request, $response, $exception) use ($c) {
-        $response->getBody()->rewind();
-        return $c['response']->withStatus(500)
-                             ->withHeader('X-Status-Reason', $exception->getMessage())
-                             ->withHeader('Content-Type', 'text/html')
-                             ->write('Something went wrong!');
-    };
-};
+//$c['errorHandler'] = function ($c) {
+//    return function ($request, $response, $exception) use ($c) {
+//        $response->getBody()->rewind();
+//        return $c['response']->withStatus(500)
+//                             ->withHeader('X-Status-Reason', $exception->getMessage())
+//                             ->withHeader('Content-Type', 'text/html')
+//                             ->write('Something went wrong!');
+//    };
+//};
 
 //$app->add(new \Slim\Middleware\JwtAuthentication([
 //    "secure" => false,
@@ -80,7 +80,7 @@ $headerMw = function($request, $response, $next) {
 
 // list of authorized entities
 $authorizedEntities = array(
-    "categories" => "TcBern\\Model\\Category",
+    "shopcategories" => "TcBern\\Shop\\ShopCategory",
     "internationalisation" => "TcBern\\Model\\Internationalisation",
     "identities" => "TcBern\\Model\\Identity",
     "users" => "TcBern\\Model\\User");
@@ -168,19 +168,20 @@ $app->post(
 
 
 $app->get(
-    '/api/shopcategories/{categoryId}',
+    '/api/shopcategoriess/{rootCategoryId}',
     function(Request $request, Response $response, $args) {
 
-        $categoryId = $args['categoryId'];
-        if($categoryId == ''){
-            $categoryId = 0;
+        $rootCategoryId = $args['rootCategoryId'];
+        if($rootCategoryId == ''){
+            $rootCategoryId = 10;
         }
 
-        $response->getBody()->write(json_encode(array("categoryId" => $categoryId)));
+        $categories = TcBern\Shop\ShopCategory::where('parent_id', '10')->get();
+
+        $response->getBody()->write($categories->toJson());
         return $response;
     }
 )->add($headerMw);
-
 
 
 
@@ -212,7 +213,6 @@ $app->get(
         $entity = $args['entity'];
         $objects = $authorizedEntities[$entity]::all();
         $response->getBody()->write($objects->toJson());
-        //$response->getBody()->write(json_encode(array("entity" => $entity)));
         
         return $response;
     }

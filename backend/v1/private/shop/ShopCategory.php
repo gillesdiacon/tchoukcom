@@ -1,8 +1,8 @@
-<?php namespace TcBern\Model;
+<?php namespace TcBern\Shop;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Category extends Model {
+class ShopCategory extends Model {
 
     /**
      * The database table used by the model.
