@@ -12,4 +12,8 @@ class ShopCategory extends Model {
     protected $table = 'category';
 
     public $timestamps = false;
+
+    public function subCategories() {
+        return $this->hasMany('TcBern\Shop\ShopCategory','parent_id','id') ;
+    }
 }

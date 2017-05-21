@@ -176,7 +176,7 @@ $app->get(
             $rootCategoryId = 10;
         }
 
-        $categories = TcBern\Shop\ShopCategory::where('parent_id', '10')->get();
+        $categories = TcBern\Shop\ShopCategory::where('parent_id', '10')->with('subCategories')->get();
 
         $response->getBody()->write($categories->toJson());
         return $response;
