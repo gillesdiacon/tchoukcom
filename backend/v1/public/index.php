@@ -171,8 +171,20 @@ $app->get(
     '/api/categoriess',
     function(Request $request, Response $response, $args) {
 
+		$languageId = 2;
         $rootCategoryId = 10;
-        $categories = TcBern\Model\Category::where('parent_id', $rootCategoryId)->with('subCategories')->get();
+        $categories = TcBern\Model\Category::
+		where('parent_id', $rootCategoryId)
+		->with(
+			array('subCategories.title' => function($query) use ($languageId) {
+					$query->where('language_id', $languageId);
+				},
+				'title' => function($query) use ($languageId) {
+					$query->where('language_id', $languageId);
+				}
+			)
+		)
+		->get();
 
         $response->getBody()->write($categories->toJson());
         return $response;

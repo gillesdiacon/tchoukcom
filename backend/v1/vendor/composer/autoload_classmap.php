@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'TcBern\\Model\\Category' => $baseDir . '/private/models/Category.php',
+    'TcBern\\Model\\CategoryI18n' => $baseDir . '/private/models/CategoryI18n.php',
     'TcBern\\Model\\Group' => $baseDir . '/private/models/Group.php',
     'TcBern\\Model\\Identity' => $baseDir . '/private/models/Identity.php',
     'TcBern\\Model\\Internationalisation' => $baseDir . '/private/models/Internationalisation.php',

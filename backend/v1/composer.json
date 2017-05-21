@@ -6,7 +6,7 @@
     },
     "autoload": {
         "files": [ "private/dbConfig.php" ],
-        "classmap": [ "private/models", "private/shop" ]
+        "classmap": [ "private/models" ]
     },
 	"config":{
 		"preferred-install": "dist"

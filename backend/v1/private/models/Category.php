@@ -4,14 +4,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model {
 
-    /**
-     * The database table used by the model.
-     *
-     * @var string
-     */
     protected $table = 'category';
 
     public $timestamps = false;
+	
+	public function title() {
+        return $this->hasOne('TcBern\Model\CategoryI18n');
+    }
 
     public function subCategories() {
         return $this->hasMany('TcBern\Model\Category','parent_id','id') ;
