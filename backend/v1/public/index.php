@@ -168,7 +168,7 @@ $app->post(
 
 
 $app->get(
-    '/api/categoriess',
+    '/api/shopcategories',
     function(Request $request, Response $response, $args) {
 
 		$languageId = 2;
