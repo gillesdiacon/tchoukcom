@@ -6,14 +6,10 @@ angular.module('tpApp', [
   'tpApp.shop',
   'tpApp.conditions',
   'tpApp.contact',
-  'tpApp.version',
-  'Restangular'
+  'tpApp.version'
 ]).
-config(['$locationProvider', '$routeProvider', 'restangular', function($locationProvider, $routeProvider) {
+config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
   $locationProvider.hashPrefix('!');
 
-  $routeProvider.otherwise({redirectTo: '/shop'});
-  
-  //restangular.setBaseUrl('../../backend/v1/public/api');
-  
+  $routeProvider.otherwise({redirectTo: '/shop'});  
 }]);
