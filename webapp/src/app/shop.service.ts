@@ -1,19 +1,24 @@
 import { Injectable } from '@angular/core';
-import { Http }       from '@angular/http';
+import { Headers, Http } from '@angular/http';
 
-import { Observable }     from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/toPromise';
 
-import { Hero } from './hero';
+import { Category } from './category';
 
 @Injectable()
-export class HeroSearchService {
+export class ShopService {
 
     constructor(private http: Http) { }
 
-    search(term: string): Observable<Hero[]> {
-        return this.http
-           .get(`app/heroes/?name=${term}`)
-           .map(response => response.json().data as Hero[]);
+    getCategories(): Promise<Category[]> {
+        return this.http.get('http://localhost/tchoukcom/backend/v1/public/api/shopcategories')
+            .toPromise()
+            .then(response => response.json().data as Category[])
+            .catch(this.handleError);
+    }
+    
+    private handleError(error: any): Promise<any> {
+        console.error('An error occurred', error);
+        return Promise.reject(error.message || error);
     }
 }
