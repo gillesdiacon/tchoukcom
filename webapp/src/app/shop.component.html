@@ -10,23 +10,16 @@
         </div>
         <div id="categoryMenu">
             <ul>
-                <li *ngFor="let category of categories" (click)="onSelect(category)" [class.selected]="category === selectedCategory">
+                <li *ngFor="let category of categories" (click)="onSelect(category)"
+                        [class.selected]="category === selectedCategory">
                     <span>{{category.title.name}}</span>
+                    <ul *ngIf="category.sub_categories && category === selectedCategory">
+                        <li *ngFor="let subCategory of category.sub_categories" (click)="onSelect(subCategory)"
+                                [class.selected]="subCategory === selectedCategory">
+                            <span>{{subCategory.title.name}}</span>
+                        </li>
+                    </ul>
                 </li>
-                <!--
-                <li><a href="#!/view1">Liquidation</a></li>
-                <li><a href="#!/view2">Cadres de tchoukball</a></li>
-                <li><a href="">Ballons de tchoukball</a></li>
-                <li><a href="">Equipement pour le tchoukball </a></li>
-                <li><a href="">Genouillères et coudières </a></li>
-                <li><a href="">DVDs, livres, brochures</a></li>
-                <li><a href="">Articles de sport</a></li>
-                <li><a href="">Soins, arbitres, supporters</a></li>
-                <li><a href="">Shop Clubs et  Fédération</a></li>
-                <li><a href="">Pièces de rechange </a></li>
-                <li><a href="">Textile</a></li>
-                <li><a href="">Liquidation</a></li>
-                -->
             </ul>
         </div>
     </div>

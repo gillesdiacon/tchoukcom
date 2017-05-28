@@ -30,6 +30,7 @@ export class ShopComponent implements OnInit {
     }
     
     onSelect(category: Category): void {
+        console.log(category);
         this.selectedCategory = category;
     }
 }
