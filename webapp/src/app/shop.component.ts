@@ -26,6 +26,10 @@ export class ShopComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        // this.getCategories();
+        this.getCategories();
+    }
+    
+    onSelect(category: Category): void {
+        this.selectedCategory = category;
     }
 }

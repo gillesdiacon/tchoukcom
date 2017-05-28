@@ -10,6 +10,10 @@
         </div>
         <div id="categoryMenu">
             <ul>
+                <li *ngFor="let category of categories" (click)="onSelect(category)" [class.selected]="category === selectedCategory">
+                    <span>{{category.title.name}}</span>
+                </li>
+                <!--
                 <li><a href="#!/view1">Liquidation</a></li>
                 <li><a href="#!/view2">Cadres de tchoukball</a></li>
                 <li><a href="">Ballons de tchoukball</a></li>
@@ -22,14 +26,17 @@
                 <li><a href="">Pièces de rechange </a></li>
                 <li><a href="">Textile</a></li>
                 <li><a href="">Liquidation</a></li>
-            </ul></div>
+                -->
+            </ul>
+        </div>
     </div>
     <div class="clearOnly">&nbsp;</div>
 </div>
 <div id="col-center">
     <div class="container">
-        <div style="height: 80px">&nbsp;</div>
-        <button (click)="getCategories()">Categories</button>
+        <div *ngIf="selectedCategory">
+            <h1 style="text-align: center">{{selectedCategory.title.name}}</h1>
+        </div>
     </div>
     <div class="clearOnly">&nbsp;</div>
 </div>

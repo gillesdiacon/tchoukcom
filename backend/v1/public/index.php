@@ -80,7 +80,7 @@ $headerMw = function($request, $response, $next) {
 
 // list of authorized entities
 $authorizedEntities = array(
-    "shopcategories" => "TcBern\\Shop\\ShopCategory",
+    "categories" => "TcBern\\Model\\Category",
     "internationalisation" => "TcBern\\Model\\Internationalisation",
     "identities" => "TcBern\\Model\\Identity",
     "users" => "TcBern\\Model\\User");

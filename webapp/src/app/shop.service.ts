@@ -13,8 +13,13 @@ export class ShopService {
     getCategories(): Promise<Category[]> {
         return this.http.get('http://localhost/tchoukcom/backend/v1/public/api/shopcategories')
             .toPromise()
-            .then(response => response.json().data as Category[])
+            .then(this.extractData)
             .catch(this.handleError);
+    }
+    
+    private extractData(res: Response) {
+        let body = res.json();
+        return body || [];
     }
     
     private handleError(error: any): Promise<any> {
