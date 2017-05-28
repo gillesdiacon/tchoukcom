@@ -11,8 +11,8 @@ import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService }  from './in-memory-data.service';
 
 import { AppComponent }  from './app.component';
-import { DashboardComponent } from './dashboard.component';
-import { HeroesComponent } from './heroes.component';
+import { ConditionsComponent } from './conditions.component';
+import { ContactComponent } from './contact.component';
 import { HeroDetailComponent } from './hero-detail.component';
 import { HeroSearchComponent } from './hero-search.component';
 
@@ -26,7 +26,7 @@ import { HeroService } from './hero.service';
         InMemoryWebApiModule.forRoot(InMemoryDataService),
         AppRoutingModule
     ],
-    declarations: [ AppComponent, DashboardComponent, HeroesComponent, HeroDetailComponent, HeroSearchComponent ],
+    declarations: [ AppComponent, ConditionsComponent, ContactComponent, HeroDetailComponent, HeroSearchComponent ],
     providers:    [ HeroService ],
     bootstrap:    [ AppComponent ]
 })

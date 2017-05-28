@@ -6,11 +6,11 @@ import { HeroService } from './hero.service';
 
 @Component({
     selector: 'my-heroes',
-    templateUrl: './heroes.component.html',
-    styleUrls: [ './heroes.component.css' ]
+    templateUrl: './contact.component.html',
+    styleUrls: [ './contact.component.css' ]
 })
 
-export class HeroesComponent implements OnInit {
+export class ContactComponent implements OnInit {
     heroes: Hero[];
     selectedHero: Hero;
     
