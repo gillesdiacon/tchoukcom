@@ -11,9 +11,10 @@ import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService }  from './in-memory-data.service';
 
 import { AppComponent }  from './app.component';
+import { ShopComponent } from './shop.component';
 import { ConditionsComponent } from './conditions.component';
 import { ContactComponent } from './contact.component';
-import { FooterComponent } from './footer.component';
+import { AddressComponent } from './address.component';
 import { HeroDetailComponent } from './hero-detail.component';
 
 import { HeroService } from './hero.service';
@@ -26,7 +27,7 @@ import { HeroService } from './hero.service';
         InMemoryWebApiModule.forRoot(InMemoryDataService),
         AppRoutingModule
     ],
-    declarations: [ AppComponent, ConditionsComponent, ContactComponent, FooterComponent, HeroDetailComponent ],
+    declarations: [ AppComponent, ShopComponent, ConditionsComponent, ContactComponent, AddressComponent, HeroDetailComponent ],
     providers:    [ HeroService ],
     bootstrap:    [ AppComponent ]
 })
