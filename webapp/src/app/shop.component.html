@@ -26,10 +26,21 @@
     <div class="clearOnly">&nbsp;</div>
 </div>
 <div id="col-center">
-    <div class="container">
-        <div *ngIf="selectedCategory">
-            <h1 style="text-align: center">{{selectedCategory.title.name}}</h1>
+    <div class="shopContainer container">
+        <div *ngFor="let categoryElement of categoryElements" class="categoryItem" (click)="onSelect(categoryElement)">
+            <div class="categoryImg">
+                <img title="{{categoryElement.title.name}}-({{categoryElement.id}})"
+                        alt="Cadres de tchoukball"
+                        src="categoryImages/{{categoryElement.title.image_filename}}"
+                        onError="this.onerror=null;this.src='categoryImages/noCategoryImage.jpg';"
+                        width="100px" />
+            </div>
+            <div class="categoryTitle">
+                <div class="categoryName">{{categoryElement.title.name}}</div>
+                <div class="numberOfProd">(XX Produits)</div>
+            </div>
         </div>
+        <div class="clearOnly">&nbsp;</div>
     </div>
     <div class="clearOnly">&nbsp;</div>
 </div>

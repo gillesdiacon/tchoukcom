@@ -13,34 +13,26 @@ import { ShopService }       from './shop.service';
 
 export class ShopComponent implements OnInit {
 
+    // for category menu
     categories: Category[];
     selectedCategory: Category;
-    parentSelectedCategory: Category;
+    
+    // in the element (center column)
+    categoryElements: Category[];
 
     constructor(private shopService: ShopService, private router: Router) {
     }
 
-    getCategories(): void {
+    ngOnInit(): void {
         this.shopService
             .getCategories()
-            .then(categories => this.categories = categories);
-    }
-
-    ngOnInit(): void {
-        this.getCategories();
+            .then(categories => this.categories = this.categoryElements = categories);
     }
     
     onSelect(category: Category): void {
-        console.log(category);
-    
         this.selectedCategory = category;
-        this.parentSelectedCategory = category;
-    }
-    
-    onSubSelect(category: Category, subCategory: Category): void {
-        console.log("onSubSelect");
-        
-        this.selectedCategory = category;
-        this.parentSelectedCategory = subCategory;
+        if(category.sub_categories){
+            this.categoryElements = category.sub_categories;
+        }
     }
 }
