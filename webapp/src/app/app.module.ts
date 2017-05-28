@@ -13,8 +13,8 @@ import { InMemoryDataService }  from './in-memory-data.service';
 import { AppComponent }  from './app.component';
 import { ConditionsComponent } from './conditions.component';
 import { ContactComponent } from './contact.component';
+import { FooterComponent } from './footer.component';
 import { HeroDetailComponent } from './hero-detail.component';
-import { HeroSearchComponent } from './hero-search.component';
 
 import { HeroService } from './hero.service';
 
@@ -26,7 +26,7 @@ import { HeroService } from './hero.service';
         InMemoryWebApiModule.forRoot(InMemoryDataService),
         AppRoutingModule
     ],
-    declarations: [ AppComponent, ConditionsComponent, ContactComponent, HeroDetailComponent, HeroSearchComponent ],
+    declarations: [ AppComponent, ConditionsComponent, ContactComponent, FooterComponent, HeroDetailComponent ],
     providers:    [ HeroService ],
     bootstrap:    [ AppComponent ]
 })

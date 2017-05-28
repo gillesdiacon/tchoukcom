@@ -1,9 +1,71 @@
-<h3>Top Heroes</h3>
-<div class="grid grid-pad">
-    <a *ngFor="let hero of heroes" [routerLink]="['/detail', hero.id]"  class="col-1-4">
-        <div class="module hero">
-            <h4>{{hero.name}}</h4>
-        </div>
-    </a>
+<div id="pageContainer" class="container containerWithTitle">
+  <div class="titleContainer">
+    <div class="titleLeft">&nbsp;</div>
+    <div class="titleCenter">
+      <div class="titleText">Conditions générale de vente</div>
+    </div>
+    <div class="titleRight">&nbsp;</div>
+    <div class="clearOnly"></div>
+  </div>
+  <p>
+    Le fait de passer commande par oral ou par écrit sous-entend l'acceptation des conditions ci-dessous.<br>
+    Nos prix et notre assortiment peuvent être sujet à modifications.
+  </p>
+  <p>
+    <b>Prix</b>
+  </p>
+  <ul>
+    <li>Tous nos prix sont indiqués taxes incluses.</li>
+    <li>Nous nous réservons en tout temps le droit de modifier les prix et les assortiments.</li>
+    <li>Nos offres sont sans engagements. Les accords verbaux et renseignements oraux ne nous engagent qu’à partir de notre confirmation de commande écrite.</li>
+  </ul>
+  <p>
+    <b>Livraison</b>
+  </p>
+  <ul>
+    <li>L'expédition est effectuée par le moyen qui nous semble le plus avantageux.</li>
+    <li>Les frais d'emballage et de livraison sont à la charge du client.</li>
+    <li>Nous nous réservons le droit d'effectuer des livraisons partielles.</li>
+    <li>La marchandise livrée reste notre propriété jusqu’au paiement complet du prix convenu.</li>
+  </ul>
+  <p>
+    <b>Condition de paiement</b>
+  </p>
+  <ul>
+    <li>Paiement net, dans les 15 jours à compter de la date de facturation.</li>
+  </ul>
+  <p>
+    <b>Réclamation</b>
+  </p>
+  <ul>
+    <li>Les réclamations, pour vice ou défaut de fabrication, ne peuvent être acceptées que dans un délai de 10 jours après la livraison.</li>
+    <li>Les éventuels dommages survenus durant le transport doivent êtres confirmés auprès de la poste ou du transporteur au moment de la livraison.</li>
+  </ul>
+  <p>
+    <b>Reprise de la marchandise</b>
+  </p>
+  <ul>
+    <li> Les retours supposent notre consentement écrit et ne peuvent être pris en considération que dans un délai de 10 jours après la date de la livraison.</li>
+  </ul>
+  <p>
+    <b>Textile</b>
+  </p>
+  <ul>
+    <li> De part la nature des supports, des encres et des systèmes d’impression, des différences de teintes sont inévitables. Elles ne sauraient donc faire l’objet de réclamations.</li>
+  </ul>
+  <p>
+    <b>
+      Tchoukball Promotion sàrl.
+      <br>
+      Phone: +41 22 368 00 41
+      <br>
+      Fax    : +41 22 368 00 28
+    </b>
+    <br>
+    <b>
+      <a href="mailto:info@tchouk.com">info@tchouk.com</a>
+      <br>
+      <a class="external-link-new-window" target="_blank" href="http://www.tchouk.com/">www.tchouk.com</a>
+    </b>
+  </p>
 </div>
-<hero-search></hero-search>
