@@ -4,12 +4,6 @@
 #categoryMenu ul ul li {
     padding-left: 20px;
 }
-#categoryMenu ul ul ul li {
-    padding-left: 30px;
-}
-#categoryMenu ul ul ul ul li {
-    padding-left: 40px;
-}
 #categoryMenuContainer {
     border-radius: 10px 0 0;
 }
@@ -21,12 +15,16 @@
     list-style-type: none;
     margin-left: 0;
 }
+#categoryMenu ul ul {
+    margin-left: -10px;
+}
 #categoryMenu li {
     cursor: pointer;
     border-top: 1px solid #575656;
     padding-bottom: 2px;
     padding-top: 2px;
     color: #575656;
+    font-weight: normal;
 }
 #categoryMenu li.selected {
     color: #f07b0e;

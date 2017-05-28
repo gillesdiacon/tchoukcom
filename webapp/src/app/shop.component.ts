@@ -15,6 +15,7 @@ export class ShopComponent implements OnInit {
 
     categories: Category[];
     selectedCategory: Category;
+    parentSelectedCategory: Category;
 
     constructor(private shopService: ShopService, private router: Router) {
     }
@@ -31,6 +32,15 @@ export class ShopComponent implements OnInit {
     
     onSelect(category: Category): void {
         console.log(category);
+    
         this.selectedCategory = category;
+        this.parentSelectedCategory = category;
+    }
+    
+    onSubSelect(category: Category, subCategory: Category): void {
+        console.log("onSubSelect");
+        
+        this.selectedCategory = category;
+        this.parentSelectedCategory = subCategory;
     }
 }

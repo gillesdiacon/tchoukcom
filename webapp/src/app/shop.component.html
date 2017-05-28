@@ -13,8 +13,8 @@
                 <li *ngFor="let category of categories" (click)="onSelect(category)"
                         [class.selected]="category === selectedCategory">
                     <span>{{category.title.name}}</span>
-                    <ul *ngIf="category.sub_categories && category === selectedCategory">
-                        <li *ngFor="let subCategory of category.sub_categories" (click)="onSelect(subCategory)"
+                    <ul *ngIf="selectedCategory && category.sub_categories && (category.id === selectedCategory.id || category.id === selectedCategory.parent_id)">
+                        <li *ngFor="let subCategory of category.sub_categories" (click)="onSelect(subCategory); $event.stopPropagation();"
                                 [class.selected]="subCategory === selectedCategory">
                             <span>{{subCategory.title.name}}</span>
                         </li>

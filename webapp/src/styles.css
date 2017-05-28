@@ -14,12 +14,18 @@ html {
     height: 100%;
 }
 body {
-    background: rgba(0, 0, 0, 0) -moz-linear-gradient(center top , #004672 0%, #528094 50%, #004672 100%) repeat scroll 0 0;
-    font-family: "trebuchet ms",Arial,Tahoma,Verdana,sans-serif;
+    font-family: "trebuchet ms", Arial, Tahoma, Verdana, sans-serif;
     font-size: 12px;
+    line-height: 17px;
     font-weight: normal;
     height: 100%;
-    line-height: 17px;
+    
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#004672+0,528094+50,004672+100 */
+    background: #004672; /* Old browsers */
+    background: -moz-linear-gradient(top,  #004672 0%, #528094 50%, #004672 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top,  #004672 0%,#528094 50%,#004672 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom,  #004672 0%,#528094 50%,#004672 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#004672', endColorstr='#004672',GradientType=0 ); /* IE6-9 */
 }
 p {
     margin-top: 10px;
@@ -50,11 +56,20 @@ a {
     width: 1000px;
 }
 #header {
-    background: rgba(0, 0, 0, 0) -moz-linear-gradient(center top , #ffff00, #fbbb00) repeat scroll 0 0;
-    border-radius: 0 0 10px 10px;
+    padding: 0px;
     height: 170px;
     margin-bottom: 20px;
-    padding: 0;
+
+    border-radius: 0px 0px 10px 10px;
+    -moz-border-radius: 0px 0px 10px 10px;
+    -webkit-border-radius: 0px 0px 10px 10px;
+    
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffff00+0,fbbb00+100 */
+    background: #ffff00; /* Old browsers */
+    background: -moz-linear-gradient(top,  #ffff00 0%, #fbbb00 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top,  #ffff00 0%,#fbbb00 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom,  #ffff00 0%,#fbbb00 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffff00', endColorstr='#fbbb00',GradientType=0 ); /* IE6-9 */
 }
 #bannerLogo {
     float: left;
@@ -204,9 +219,18 @@ a {
     width: 100%;
 }
 #footer {
-    background: rgba(0, 0, 0, 0) -moz-linear-gradient(center top , #ffff00, #fbbb00) repeat scroll 0 0;
-    border-radius: 10px 10px 0 0;
     height: 30px;
+
+    border-radius: 10px 10px 0px 0px;
+    -moz-border-radius: 10px 10px 0px 0px;
+    -webkit-border-radius: 10px 10px 0px 0px;
+
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffff00+0,fbbb00+100 */
+    background: #ffff00; /* Old browsers */
+    background: -moz-linear-gradient(top,  #ffff00 0%, #fbbb00 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top,  #ffff00 0%,#fbbb00 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom,  #ffff00 0%,#fbbb00 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffff00', endColorstr='#fbbb00',GradientType=0 ); /* IE6-9 */
 }
 #footerCopyright, #footer a {
     color: #0061a1;
