@@ -84,13 +84,13 @@
 .shopContainer > .productItem:nth-child(3n+1) {
     clear: both;
 }
-.productItem .productimages {
+.productItem .productImg {
     padding-bottom: 10px;
     padding-top: 10px;
     text-align: center;
     width: 100%;
 }
-.productItem .productimages images {
+.productItem .productImg img {
     vertical-align: middle;
 }
 .productItem .productInfo {

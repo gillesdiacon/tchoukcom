@@ -8,10 +8,6 @@ $baseDir = dirname($vendorDir);
 return array(
     'TcBern\\Model\\Category' => $baseDir . '/private/models/Category.php',
     'TcBern\\Model\\CategoryI18n' => $baseDir . '/private/models/CategoryI18n.php',
-    'TcBern\\Model\\Group' => $baseDir . '/private/models/Group.php',
-    'TcBern\\Model\\Identity' => $baseDir . '/private/models/Identity.php',
-    'TcBern\\Model\\Internationalisation' => $baseDir . '/private/models/Internationalisation.php',
-    'TcBern\\Model\\Position' => $baseDir . '/private/models/Position.php',
-    'TcBern\\Model\\Profile' => $baseDir . '/private/models/Profile.php',
-    'TcBern\\Model\\User' => $baseDir . '/private/models/User.php',
+    'TcBern\\Model\\Product' => $baseDir . '/private/models/Product.php',
+    'TcBern\\Model\\ProductI18n' => $baseDir . '/private/models/ProductI18n.php',
 );

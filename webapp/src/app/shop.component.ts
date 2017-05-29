@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router }            from '@angular/router';
 
 import { Category }          from './category';
+import { Product }          from './product';
 import { ShopService }       from './shop.service';
 
 @Component({
@@ -19,6 +20,7 @@ export class ShopComponent implements OnInit {
     
     // in the element (center column)
     categoryElements: Category[];
+    productElements: Product[];
 
     constructor(private shopService: ShopService, private router: Router) {
     }
@@ -33,6 +35,10 @@ export class ShopComponent implements OnInit {
         this.selectedCategory = category;
         if(category.sub_categories){
             this.categoryElements = category.sub_categories;
+            this.productElements = null;
+        }else{
+            this.categoryElements = null;
+            this.shopService.getProducts(category.id).then(products => this.productElements = products);
         }
     }
 }

@@ -81,10 +81,7 @@ $headerMw = function($request, $response, $next) {
 // list of authorized entities
 $authorizedEntities = array(
     "categories" => "TcBern\\Model\\Category",
-    "internationalisation" => "TcBern\\Model\\Internationalisation",
-    "identities" => "TcBern\\Model\\Identity",
-    "users" => "TcBern\\Model\\User");
-
+    "products" => "TcBern\\Model\\Product");
 // list of entities that requires an authentication
 $authenticationRequiredEntities = array(
     "identities" => "TcBern\\Model\\Identity",
@@ -136,36 +133,6 @@ $app->post(
     }
 )->add($headerMw);
 
-$app->post(
-    '/password/{id}',
-    function (Request $request, Response $response, $args) {
-        global $authorizedEntities, $cipher, $encryptionKey, $iv;
-        
-        $id = $args['id'];
-        $token = $request->getHeaderLine('Token');
-        $decoded = decode($token, $cipher, $encryptionKey, $iv);
-
-        if (/* check admin rights */ isOwnershipRequired('users') && isNotOwner('users', $id, $decoded->id)) {
-            $response->getBody()->write("You must be the owner of these data");
-            return $response->withStatus(401);
-        }
-
-        $input = $request->getParsedBody();
-        $user = User::find($id);
-
-        if ($user) {
-            $user->password = $input['password'];
-            $user->save();
-
-            $response->getBody()->write("success");
-            return $response->withStatus(200);
-        } else {
-            return $response->withStatus(404);
-        }
-    }
-)->add($tokenMw);
-
-
 
 $app->get(
     '/api/shopcategories',
@@ -176,7 +143,8 @@ $app->get(
         $categories = TcBern\Model\Category::
 		where('parent_id', $rootCategoryId)
 		->with(
-			array('subCategories.title' => function($query) use ($languageId) {
+			array(
+                'subCategories.title' => function($query) use ($languageId) {
 					$query->where('language_id', $languageId);
 				},
 				'title' => function($query) use ($languageId) {
@@ -191,26 +159,43 @@ $app->get(
     }
 )->add($headerMw);
 
-
-
 $app->get(
-    '/api/committee',
-    function(Request $request, Response $response) {
-        $profiles = Profile::whereHas('positions', function($q) {
-          $q->where('key', '=', 'position.committee');
-        })->get();
-        $response->getBody()->write($profiles->load('identity', 'positions')->toJson());
+    '/api/shopproducts/{categoryId}',
+    function(Request $request, Response $response, $args) {
+
+		$languageId = 2;
+        $categoryId = $args['categoryId'];
+        $productsWithoutVariantQuery = TcBern\Model\Product::
+		where('category_id', $categoryId)
+        ->where('variant_group_id', 0)
+		->with(
+			array(
+				'title' => function($query) use ($languageId) {
+					$query->where('language_id', $languageId);
+				}
+			)
+		);
+        
+        $products = TcBern\Model\Product::
+		where('category_id', $categoryId)
+        ->where('variant_group_id', '<>', 0)
+        ->groupBy('variant_group_id')
+		->with(
+			array(
+				'title' => function($query) use ($languageId) {
+					$query->where('language_id', $languageId);
+				}
+			)
+		)
+        ->unionAll($productsWithoutVariantQuery)
+        ->orderBy('code')
+        ->get();
+
+        $response->getBody()->write($products->toJson());
         return $response;
     }
 )->add($headerMw);
 
-$app->get(
-    '/api/infopreview',
-    function(Request $request, Response $response) {
-        $response->getBody()->write(Info::orderBy('date', 'DESC')->take(3)->get()->toJson());
-        return $response;
-    }
-)->add($headerMw);
 
 // handle GET requests for /entity
 $app->get(
