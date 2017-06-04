@@ -7,10 +7,8 @@ import { RouterModule }   from '@angular/router';
 import { AppRoutingModule }     from './app-routing.module';
 
 import { AppComponent }  from './app.component';
-import { ShopComponent } from './shop.component';
 import { ConditionsComponent } from './conditions.component';
 import { ContactComponent } from './contact.component';
-import { AddressComponent } from './address.component';
 import { HeroDetailComponent } from './hero-detail.component';
 
 import { HeroService } from './hero.service';
@@ -22,7 +20,7 @@ import { HeroService } from './hero.service';
         HttpModule,
         AppRoutingModule
     ],
-    declarations: [ AppComponent, ShopComponent, ConditionsComponent, ContactComponent, AddressComponent, HeroDetailComponent ],
+    declarations: [ AppComponent, ConditionsComponent, ContactComponent, HeroDetailComponent ],
     providers:    [ HeroService ],
     bootstrap:    [ AppComponent ]
 })
