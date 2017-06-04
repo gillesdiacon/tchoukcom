@@ -27,7 +27,7 @@ export class ShopComponent implements OnInit {
 
     ngOnInit(): void {
         this.shopService
-            .getCategories()
+            .getCategories(10)
             .then(categories => this.categories = this.categoryElements = categories);
     }
     

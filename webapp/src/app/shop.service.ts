@@ -11,15 +11,14 @@ export class ShopService {
 
     constructor(private http: Http) { }
 
-    getCategories(): Promise<Category[]> {
-        return this.http.get('http://localhost/tchoukcom/backend/v1/public/api/shopcategories')
+    getCategories(rootCategoryId: number): Promise<Category[]> {
+        return this.http.get('http://localhost/tchoukcom/backend/v1/public/api/shopcategories/' + `${rootCategoryId}`)
             .toPromise()
             .then(response => response.json() as Category[])
             .catch(this.handleError);
     }
     
     getProducts($categoryId: number): Promise<Product[]> {
-        console.log($categoryId);
         return this.http.get('http://localhost/tchoukcom/backend/v1/public/api/shopproducts/' + $categoryId)
             .toPromise()
             .then(response => response.json() as Product[])

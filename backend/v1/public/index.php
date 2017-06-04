@@ -135,11 +135,11 @@ $app->post(
 
 
 $app->get(
-    '/api/shopcategories',
+    '/api/shopcategories/{rootCategoryId}',
     function(Request $request, Response $response, $args) {
 
 		$languageId = 2;
-        $rootCategoryId = 10;
+        $rootCategoryId = $args['rootCategoryId'];
         $categories = TcBern\Model\Category::
 		where('parent_id', $rootCategoryId)
 		->with(
