@@ -7,6 +7,7 @@ import { RouterModule }  from '@angular/router';
 import { ShopRoutingModule }     from './shop-routing.module';
 
 import { ShopComponent }          from './shop.component';
+import { ShopListComponent }      from './shop-list.component';
 import { CategoryMenuComponent }  from './category-menu.component';
 import { AddressComponent }       from './address.component';
 
@@ -17,7 +18,8 @@ import { AddressComponent }       from './address.component';
         HttpModule,
         ShopRoutingModule
     ],
-    declarations: [ ShopComponent, CategoryMenuComponent, AddressComponent ],
-    providers:    [  ]
+    declarations: [ ShopComponent, ShopListComponent, CategoryMenuComponent, AddressComponent ],
+    providers:    [  ],
+    bootstrap:    [ ShopComponent ]
 })
 export class ShopModule { }
