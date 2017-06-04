@@ -1,0 +1,24 @@
+<div id="categoryMenuContainer" class="container containerWithTitle">
+    <div class="titleContainer">
+        <div class="titleLeft">&nbsp;</div>
+        <div class="titleCenter">
+            <div class="titleText">Shop</div>
+        </div>
+        <div class="titleRight">&nbsp;</div>
+        <div class="clearOnly"></div>
+    </div>
+    <div id="categoryMenu">
+        <ul>
+            <li *ngFor="let category of categories" (click)="onSelect(category)"
+                    [class.selected]="category === selectedCategory">
+                <span>{{category.title.name}}</span>
+                <ul *ngIf="selectedCategory && category.sub_categories && (category.id === selectedCategory.id || category.id === selectedCategory.parent_id)">
+                    <li *ngFor="let subCategory of category.sub_categories" (click)="onSelect(subCategory); $event.stopPropagation();"
+                            [class.selected]="subCategory === selectedCategory">
+                        <span>{{subCategory.title.name}}</span>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
