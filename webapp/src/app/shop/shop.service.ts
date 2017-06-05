@@ -11,10 +11,18 @@ export class ShopService {
 
     constructor(private http: Http) { }
 
-    getCategories(rootCategoryId: number): Promise<Category[]> {
-        return this.http.get('http://localhost/tchoukcom/backend/v1/public/api/shopcategories/' + `${rootCategoryId}`)
+    getCategory(categoryParam: number): Promise<Category> {
+        
+        let categoryId;
+        if(categoryParam){
+            categoryId = categoryParam;
+        } else {
+            categoryId = 10;
+        }
+    
+        return this.http.get('http://localhost/tchoukcom/backend/v1/public/api/shopcategory/' + `${categoryId}`)
             .toPromise()
-            .then(response => response.json() as Category[])
+            .then(response => response.json() as Category)
             .catch(this.handleError);
     }
     

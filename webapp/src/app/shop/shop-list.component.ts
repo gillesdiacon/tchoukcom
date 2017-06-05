@@ -16,7 +16,6 @@ import { ShopService }       from './shop.service';
 
 export class ShopListComponent implements OnInit {
 
-    // in the element (center column)
     categoryElements: Category[];
     productElements: Product[];
 
@@ -28,34 +27,17 @@ export class ShopListComponent implements OnInit {
     }
     
     ngOnInit(): void {
-        // this.route.params.switchMap((params: Params) => this.heroService.getHero(+params['id'])).subscribe(hero => this.hero = hero);
-        // this.route.params.switchMap((params: Params) => console.log(+params['id']));
-
-        this.route.params.switchMap((params: Params) => this.shopService.getCategories(+params['id'])).subscribe(categories => this.categoryElements = categories);
+        this.route.params
+            .switchMap((params: Params) => this.shopService.getCategory(+params['id']))
+            .subscribe(category => {
+                if(category.sub_categories && category.sub_categories.length > 0){
+                    this.categoryElements = category.sub_categories;
+                    this.productElements = null;
+                }else{
+                    this.categoryElements = null;
+                    this.shopService.getProducts(category.id).then(products => this.productElements = products);
+                }
+            }
+        );
     }
-
-    // // for category menu
-    // categories: Category[];
-    // selectedCategory: Category;
-    
-
-    // constructor(private shopService: ShopService, private router: Router) {
-    // }
-
-    // ngOnInit(): void {
-        // this.shopService
-            // .getCategories(10)
-            // .then(categories => this.categories = this.categoryElements = categories);
-    // }
-    
-    // onSelect(category: Category): void {
-        // this.selectedCategory = category;
-        // if(category.sub_categories){
-            // this.categoryElements = category.sub_categories;
-            // this.productElements = null;
-        // }else{
-            // this.categoryElements = null;
-            // this.shopService.getProducts(category.id).then(products => this.productElements = products);
-        // }
-    // }
 }

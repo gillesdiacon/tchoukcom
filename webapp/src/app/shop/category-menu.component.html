@@ -10,10 +10,10 @@
     <div id="categoryMenu">
         <ul>
             <li *ngFor="let category of categories" (click)="onSelect(category)">
-                <a routerLink="category/{{category.id}}" [class.selected]="category === selectedCategory">{{category.title.name}}</a>
+                <a [routerLink]="['category', category.id]" [class.selected]="category === selectedCategory">{{category.title.name}}</a>
                 <ul *ngIf="selectedCategory && category.sub_categories && (category.id === selectedCategory.id || category.id === selectedCategory.parent_id)">
                     <li *ngFor="let subCategory of category.sub_categories" (click)="onSelect(subCategory); $event.stopPropagation();">
-                        <a routerLink="category/{{subCategory.id}}" [class.selected]="subCategory === selectedCategory">{{subCategory.title.name}}</a>
+                        <a [routerLink]="['category', subCategory.id]" [class.selected]="subCategory === selectedCategory">{{subCategory.title.name}}</a>
                     </li>
                 </ul>
             </li>

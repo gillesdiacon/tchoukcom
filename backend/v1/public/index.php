@@ -135,16 +135,21 @@ $app->post(
 
 
 $app->get(
-    '/api/shopcategories/{rootCategoryId}',
+    '/api/shopcategory/{categoryId}',
     function(Request $request, Response $response, $args) {
 
 		$languageId = 2;
-        $rootCategoryId = $args['rootCategoryId'];
-        $categories = TcBern\Model\Category::
-		where('parent_id', $rootCategoryId)
+        $categoryId = $args['categoryId'];
+        $category = TcBern\Model\Category::
+		where('id', $categoryId)
 		->with(
 			array(
+                'subCategories',
+                'subCategories.subCategories',
                 'subCategories.title' => function($query) use ($languageId) {
+					$query->where('language_id', $languageId);
+				},
+                'subCategories.subCategories.title' => function($query) use ($languageId) {
 					$query->where('language_id', $languageId);
 				},
 				'title' => function($query) use ($languageId) {
@@ -152,9 +157,9 @@ $app->get(
 				}
 			)
 		)
-		->get();
+		->first();
 
-        $response->getBody()->write($categories->toJson());
+        $response->getBody()->write($category->toJson());
         return $response;
     }
 )->add($headerMw);
