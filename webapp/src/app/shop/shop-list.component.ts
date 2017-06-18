@@ -10,8 +10,7 @@ import { ShopService }       from './shop.service';
 
 @Component({
     templateUrl: './shop-list.component.html',
-    styleUrls: [ './shop-list.component.css' ],
-    providers: [ ShopService ]
+    styleUrls: [ './shop-list.component.css' ]
 })
 
 export class ShopListComponent implements OnInit {
@@ -30,6 +29,9 @@ export class ShopListComponent implements OnInit {
         this.route.params
             .switchMap((params: Params) => this.shopService.getCategory(+params['id']))
             .subscribe(category => {
+                
+                this.shopService.selectedCategory = category;
+                
                 if(category.sub_categories && category.sub_categories.length > 0){
                     this.categoryElements = category.sub_categories;
                     this.productElements = null;

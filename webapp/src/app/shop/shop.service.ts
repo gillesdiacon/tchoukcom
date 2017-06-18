@@ -9,6 +9,8 @@ import { Product } from './product';
 @Injectable()
 export class ShopService {
 
+    selectedCategory: Category;
+
     constructor(private http: Http) { }
 
     getCategory(categoryParam: number): Promise<Category> {

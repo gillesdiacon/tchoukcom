@@ -7,14 +7,12 @@ import { ShopService }       from './shop.service';
 @Component({
     selector: 'category-menu',
     templateUrl: './category-menu.component.html',
-    styleUrls: [ './category-menu.component.css' ],
-    providers: [ ShopService ]
+    styleUrls: [ './category-menu.component.css' ]
 })
 
 export class CategoryMenuComponent implements OnInit {
 
     categories: Category[];
-    selectedCategory: Category;
 
     constructor(private shopService: ShopService, private router: Router) {
     }
@@ -26,6 +24,6 @@ export class CategoryMenuComponent implements OnInit {
     }
     
     onSelect(category: Category): void {
-        this.selectedCategory = category;
+        this.shopService.selectedCategory = category;
     }
 }
