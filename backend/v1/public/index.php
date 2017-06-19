@@ -5,16 +5,35 @@ use TcBern\Model\User;
 use TcBern\Model\Group;
 use TcBern\Model\Profile;
 
+use Illuminate\Database\Capsule\Manager as Capsule;
+
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
 require __DIR__ . '/../vendor/autoload.php';
+include __DIR__ . '/../private/dbConfig.php';
 
 $slimSettings = array('determineRouteBeforeAppMiddleware' => true);
-$slimConfig = array('settings' => $slimSettings);
-$app = new \Slim\App(['settings' => ['determineRouteBeforeAppMiddleware' => true, 'displayErrorDetails' => true]]);
+$slimConfig = array(
+    'determineRouteBeforeAppMiddleware' => true,
+    'displayErrorDetails' => true,
+    'db' => $dbConfig
+);
 
-$c = $app->getContainer();
+$app = new \Slim\App(['settings' => $slimConfig]);
+
+$container = $app->getContainer();
+
+// Configure Eloquent
+$capsule = new Illuminate\Database\Capsule\Manager();
+$capsule->addConnection($container['settings']['db']);
+$capsule->setAsGlobal();
+$capsule->bootEloquent();
+
+$container['db'] = function ($container) use ($capsule) {
+    return $capsule;
+};
+
 //$c['errorHandler'] = function ($c) {
 //    return function ($request, $response, $exception) use ($c) {
 //        $response->getBody()->rewind();
