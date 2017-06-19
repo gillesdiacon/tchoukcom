@@ -157,26 +157,11 @@ $app->get(
     '/api/shopcategory/{categoryId}',
     function(Request $request, Response $response, $args) {
 
-		$languageId = 2;
+        global $languageId;
+        $languageId = 2;
         $categoryId = $args['categoryId'];
-        $category = TcBern\Model\Category::
-		where('id', $categoryId)
-		->with(
-			array(
-                'subCategories',
-                'subCategories.subCategories',
-                'subCategories.title' => function($query) use ($languageId) {
-					$query->where('language_id', $languageId);
-				},
-                'subCategories.subCategories.title' => function($query) use ($languageId) {
-					$query->where('language_id', $languageId);
-				},
-				'title' => function($query) use ($languageId) {
-					$query->where('language_id', $languageId);
-				}
-			)
-		)
-		->first();
+
+        $category = TcBern\Model\Category::find($categoryId);
 
         $response->getBody()->write($category->toJson());
         return $response;
