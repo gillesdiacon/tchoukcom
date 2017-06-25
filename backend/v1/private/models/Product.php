@@ -9,6 +9,7 @@ class Product extends Model {
     public $timestamps = false;
 	
 	public function title() {
-        return $this->hasOne('TcBern\Model\ProductI18n');
+        global $languageId;
+        return $this->hasOne('TcBern\Model\ProductI18n')->language($languageId);
     }
 }

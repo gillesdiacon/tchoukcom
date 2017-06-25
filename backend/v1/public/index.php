@@ -172,30 +172,20 @@ $app->get(
     '/api/shopproducts/{categoryId}',
     function(Request $request, Response $response, $args) {
 
-		$languageId = 2;
+        global $languageId;
+        $languageId = 2;
         $categoryId = $args['categoryId'];
+        
         $productsWithoutVariantQuery = TcBern\Model\Product::
-		where('category_id', $categoryId)
-        ->where('variant_group_id', 0)
-		->with(
-			array(
-				'title' => function($query) use ($languageId) {
-					$query->where('language_id', $languageId);
-				}
-			)
-		);
+        where('category_id', $categoryId)
+        ->with('title')
+        ->where('variant_group_id', 0);
         
         $products = TcBern\Model\Product::
-		where('category_id', $categoryId)
+        where('category_id', $categoryId)
         ->where('variant_group_id', '<>', 0)
+        ->with('title')
         ->groupBy('variant_group_id')
-		->with(
-			array(
-				'title' => function($query) use ($languageId) {
-					$query->where('language_id', $languageId);
-				}
-			)
-		)
         ->unionAll($productsWithoutVariantQuery)
         ->orderBy('code')
         ->get();
