@@ -12,4 +12,14 @@ class Product extends Model {
         global $languageId;
         return $this->hasOne('TcBern\Model\ProductI18n')->language($languageId);
     }
+
+    public function scopeSimple($query){
+        return $query->where('variant_group_id', 0);
+    }
+    
+    public function scopeVariant($query){
+        return $query
+            ->where('variant_group_id', '<>', 0)
+            ->groupBy('variant_group_id');
+    }
 }

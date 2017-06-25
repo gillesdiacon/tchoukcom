@@ -11,7 +11,7 @@
             </div>
             <div class="categoryTitle">
                 <div class="categoryName">{{categoryElement.title.name}}</div>
-                <div class="numberOfProd">(XX Produits)</div>
+                <div class="numberOfProd">({{categoryElement.nb_products}}&nbsp;<ng-container i18n>{categoryElement.nb_products, plural, =0 {Produit} =1 {Produit} other {Produits}}</ng-container>)</div>
             </div>
         </a>
     </div>

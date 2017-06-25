@@ -162,11 +162,33 @@ $app->get(
         $categoryId = $args['categoryId'];
 
         $category = TcBern\Model\Category::find($categoryId);
-
+        
+        postConstructCategory($category);
+        
         $response->getBody()->write($category->toJson());
         return $response;
     }
 )->add($headerMw);
+
+function postConstructCategory($category){
+    
+    $category->makeHidden('simpleProducts');
+    $category->makeHidden('variantProducts');
+    
+    $subCategories = $category->getAttribute('subCategories');
+    $nbSubCategories = count($subCategories);
+    
+    $nbProducts = count($category->getAttribute('simpleProducts')) + count($category->getAttribute('variantProducts'));
+    if($nbSubCategories > 0){
+        foreach($subCategories as $subCategory){
+            $nbSubProducts = postConstructCategory($subCategory);
+            $nbProducts += $nbSubProducts;
+        }
+    }
+    $category->nb_products = $nbProducts;
+    
+    return $nbProducts;
+}
 
 $app->get(
     '/api/shopproducts/{categoryId}',
@@ -179,13 +201,12 @@ $app->get(
         $productsWithoutVariantQuery = TcBern\Model\Product::
         where('category_id', $categoryId)
         ->with('title')
-        ->where('variant_group_id', 0);
+        ->simple();
         
         $products = TcBern\Model\Product::
         where('category_id', $categoryId)
-        ->where('variant_group_id', '<>', 0)
         ->with('title')
-        ->groupBy('variant_group_id')
+        ->variant()
         ->unionAll($productsWithoutVariantQuery)
         ->orderBy('code')
         ->get();
@@ -194,6 +215,10 @@ $app->get(
         return $response;
     }
 )->add($headerMw);
+
+
+
+
 
 
 // handle GET requests for /entity

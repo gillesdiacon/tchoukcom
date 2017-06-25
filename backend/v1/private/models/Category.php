@@ -4,7 +4,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model {
     
-    protected $with = ['subCategories', 'title'];
+    protected $with = ['subCategories', 'title', 'simpleProducts', 'variantProducts'];
     
     protected $table = 'category';
 
@@ -16,6 +16,14 @@ class Category extends Model {
     }
 
     public function subCategories() {
-        return $this->hasMany('TcBern\Model\Category','parent_id','id') ;
+        return $this->hasMany('TcBern\Model\Category','parent_id','id');
+    }
+    
+    public function simpleProducts() {
+        return $this->hasMany('TcBern\Model\Product','category_id','id')->simple();
+    }
+    
+    public function variantProducts() {
+        return $this->hasMany('TcBern\Model\Product','category_id','id')->variant();
     }
 }
