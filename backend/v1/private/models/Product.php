@@ -12,6 +12,11 @@ class Product extends Model {
         global $languageId;
         return $this->hasOne('TcBern\Model\ProductI18n')->language($languageId);
     }
+    
+    public function price(){
+        global $priceListId;
+        return $this->hasOne('TcBern\Model\Price')->priceList($priceListId);
+    }
 
     public function scopeSimple($query){
         return $query->where('variant_group_id', 0);

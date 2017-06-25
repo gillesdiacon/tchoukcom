@@ -153,6 +153,8 @@ $app->post(
 )->add($headerMw);
 
 
+
+
 $app->get(
     '/api/shopcategory/{categoryId}',
     function(Request $request, Response $response, $args) {
@@ -196,16 +198,20 @@ $app->get(
 
         global $languageId;
         $languageId = 2;
+        
+        global $priceListId;
+        $priceListId = 1;
+        
         $categoryId = $args['categoryId'];
         
         $productsWithoutVariantQuery = TcBern\Model\Product::
         where('category_id', $categoryId)
-        ->with('title')
+        ->with(['title','price'])
         ->simple();
         
         $products = TcBern\Model\Product::
         where('category_id', $categoryId)
-        ->with('title')
+        ->with(['title','price'])
         ->variant()
         ->unionAll($productsWithoutVariantQuery)
         ->orderBy('code')
