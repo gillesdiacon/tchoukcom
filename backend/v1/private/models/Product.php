@@ -22,11 +22,11 @@ class Product extends Model {
         return $this->hasOne('TcBern\Model\Variant','id','variant_id');
     }
 
-    public function scopeSimple($query){
+    public function scopeSimpleProduct($query){
         return $query->where('variant_id', 0);
     }
     
-    public function scopeVariant($query){
+    public function scopeVariantProduct($query){
         return $query
             ->where('variant_id', '<>', 0)
             ->groupBy('variant_id');

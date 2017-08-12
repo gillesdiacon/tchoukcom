@@ -20,10 +20,10 @@ class Category extends Model {
     }
     
     public function simpleProducts() {
-        return $this->hasMany('TcBern\Model\Product','category_id','id')->simple();
+        return $this->hasMany('TcBern\Model\Product','category_id','id')->simpleProduct();
     }
     
     public function variantProducts() {
-        return $this->hasMany('TcBern\Model\Product','category_id','id')->variant();
+        return $this->hasMany('TcBern\Model\Product','category_id','id')->variantProduct();
     }
 }

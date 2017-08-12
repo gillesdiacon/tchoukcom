@@ -209,11 +209,12 @@ $app->get(
         $productsWithoutVariantQuery = TcBern\Model\Product::
         where('category_id', $categoryId)
         ->with(['title','price'])
-        ->simple();
+        ->simpleProduct();
         
         $products = TcBern\Model\Product::
         where('category_id', $categoryId)
         ->with(['title','price', 'variant'])
+        ->variantProduct()
         ->unionAll($productsWithoutVariantQuery)
         ->orderBy('code')
         ->get();
