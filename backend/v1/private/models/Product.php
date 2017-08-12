@@ -17,6 +17,10 @@ class Product extends Model {
         global $priceListId;
         return $this->hasOne('TcBern\Model\Price')->priceList($priceListId);
     }
+    
+    public function variant(){
+        return $this->hasOne('TcBern\Model\Variant','id','variant_id');
+    }
 
     public function scopeSimple($query){
         return $query->where('variant_id', 0);

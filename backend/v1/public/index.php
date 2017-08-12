@@ -34,6 +34,8 @@ $container['db'] = function ($container) use ($capsule) {
     return $capsule;
 };
 
+$container['db']->connection()->enableQueryLog();
+
 //$c['errorHandler'] = function ($c) {
 //    return function ($request, $response, $exception) use ($c) {
 //        $response->getBody()->rewind();
@@ -211,19 +213,20 @@ $app->get(
         
         $products = TcBern\Model\Product::
         where('category_id', $categoryId)
-        ->with(['title','price'])
-        ->variant()
+        ->with(['title','price', 'variant'])
         ->unionAll($productsWithoutVariantQuery)
         ->orderBy('code')
         ->get();
-
+        
         $response->getBody()->write($products->toJson());
+        
+        // global $container;
+        // $sql_array = $container['db']->connection()->getQueryLog();
+        // $sql_json = json_encode($sql_array);
+        // $response->getBody()->write($sql_json);
         return $response;
     }
 )->add($headerMw);
-
-
-
 
 
 
