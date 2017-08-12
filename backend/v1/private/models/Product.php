@@ -19,12 +19,12 @@ class Product extends Model {
     }
 
     public function scopeSimple($query){
-        return $query->where('variant_group_id', 0);
+        return $query->where('variant_id', 0);
     }
     
     public function scopeVariant($query){
         return $query
-            ->where('variant_group_id', '<>', 0)
-            ->groupBy('variant_group_id');
+            ->where('variant_id', '<>', 0)
+            ->groupBy('variant_id');
     }
 }

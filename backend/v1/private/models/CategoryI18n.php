@@ -4,7 +4,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class CategoryI18n extends Model {
 
-    protected $table = 'categoryi18n';
+    protected $table = 'category_i18n';
 
     public $timestamps = false;
 

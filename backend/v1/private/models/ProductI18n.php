@@ -4,7 +4,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ProductI18n extends Model {
 
-    protected $table = 'producti18n';
+    protected $table = 'product_i18n';
 
     public $timestamps = false;
     
