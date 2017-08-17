@@ -36,7 +36,7 @@
             <div *ngFor="let variantType of productElement.variant.types">
                 <div class="variantTitle">{{variantType.name.name}}:</div>
                 <ul>
-                    <li *ngFor="let variantValue of variantType.values" class="available" title="{{variantType.name.name}}: {{variantValue.name.name}}">
+                    <li *ngFor="let variantValue of variantType.values" [class.available]="variantValue.id != variantType.selectedValueId" [class.active]="variantValue.id === variantType.selectedValueId" title="{{variantType.name.name}}: {{variantValue.name.name}}">
                         <a href="">{{variantValue.name.name}}</a>
                     </li>
                 </ul>
