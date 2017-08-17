@@ -31,6 +31,17 @@
         <div class="productAction">
             <div class="productPrice">{{productElement.price.price}} chf</div>
         </div>
+        
+        <div *ngIf="productElement.variant" class="productVariant">
+            <div *ngFor="let variantType of productElement.variant.types">
+                <div class="variantTitle">{{variantType.name.name}}:</div>
+                <ul>
+                    <li *ngFor="let variantValue of variantType.values" class="available" title="{{variantType.name.name}}: {{variantValue.name.name}}">
+                        <a href="">{{variantValue.name.name}}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
     
     <div class="clearOnly">&nbsp;</div>
