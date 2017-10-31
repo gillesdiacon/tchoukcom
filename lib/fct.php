@@ -1,7 +1,9 @@
 <?php
 
-function changeLangParam($url,$lang){
-	$hasLang = false;
+function changeParam($paramName, $default){
+    $url = $_SERVER["REQUEST_URI"];
+    
+	$hasParam = false;
 	$paramStr = "";
 	$urlArray = explode("?",$url);
 	$script = $urlArray[0];
@@ -10,16 +12,16 @@ function changeLangParam($url,$lang){
 		$paramArray = explode ("&",$urlArray[1]);
 		
 		foreach($paramArray as $param){
-			if(substr($param,0,5) == "lang="){
-				$paramStr .= "&lang=" . $lang;
-				$hasLang = true;
+			if(substr($param,0,strlen($paramName)+1) == $paramName."="){
+				$paramStr .= "&".$paramName."=" . $default;
+				$hasParam = true;
 			}else{
 				$paramStr .= "&" . $param;
 			}
 		}
 	}
-	if(!$hasLang){
-		$paramStr .= "&lang=" . $lang;
+	if(!$hasParam){
+		$paramStr .= "&".$paramName."=" . $default;
 	}
 	return $script . "?" . substr($paramStr,1);
 }

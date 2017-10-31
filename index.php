@@ -2,6 +2,15 @@
     require_once("lib/fct.php");
     
     $lang = getGETval("lang","fr");
+    $categoryId = getGETval("categoryId", 10);
+    
+    // get category tree
+    $category;
+    $URL = "http://localhost/tchoukcom/backend/v1/public/api/shopcategory/".$categoryId;
+    $dataStr = file_get_contents($URL);
+    if (!empty($dataStr)) {
+        $category = json_decode($dataStr);
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,7 +27,7 @@
         <link href="css/tp.css" rel="stylesheet">
     </head>
     <body>
-        <div class="container text-center">
+        <div class="container mx-auto">
     
             <div id="header" class="masthead mb-3 row row-eq-height no-gutters">
                 <div class="col-1"></div>
@@ -50,19 +59,63 @@
                 <div id="languageMenu" class="col-md-auto pr-3">
                     <ul>
                         <li class="<?php if($lang=="fr"){echo 'active';} ?>">
-                            <a class="rounded px-1" href="<?php echo changeLangParam($_SERVER["REQUEST_URI"],"fr") ?>" title="Afficher cette page en français" xml:lang="fr" lang="fr">FR</a>
+                            <a class="rounded px-1" href="<?php echo changeParam("lang", "fr") ?>" title="Afficher cette page en français" xml:lang="fr" lang="fr">FR</a>
                         </li>
                         <li class="<?php if($lang=="de"){echo 'active';} ?>">
-                            <a class="rounded px-1" href="<?php echo changeLangParam($_SERVER["REQUEST_URI"],"de") ?>" title="Show this page in German" xml:lang="de" lang="de">DE</a>
+                            <a class="rounded px-1" href="<?php echo changeParam("lang", "de") ?>" title="Show this page in German" xml:lang="de" lang="de">DE</a>
                         </li>
                         <li class="<?php if($lang=="en"){echo 'active';} ?>">
-                            <a class="rounded px-1" href="<?php echo changeLangParam($_SERVER["REQUEST_URI"],"en") ?>" title="Show this page in English" xml:lang="en" lang="en">EN</a>
+                            <a class="rounded px-1" href="<?php echo changeParam("lang", "en") ?>" title="Show this page in English" xml:lang="en" lang="en">EN</a>
                         </li>
                         <li class="<?php if($lang=="it"){echo 'active';} ?>">
-                            <a class="rounded px-1" href="<?php echo changeLangParam($_SERVER["REQUEST_URI"],"it") ?>" title="Show this page in Italian" xml:lang="it" lang="it">IT</a>
+                            <a class="rounded px-1" href="<?php echo changeParam("lang", "it") ?>" title="Show this page in Italian" xml:lang="it" lang="it">IT</a>
                         </li>
                     </ul>
                 </div>
+            </div>
+            
+            <div class="row no-gutters">
+                <div class="col-2">
+                    <div id="categoryMenu" class="element">
+                        <table id="title" class="ml-5">
+                            <tr>
+                                <td>
+                                    <img src="images/titleLeft_big.png" />
+                                </td>
+                                <td class="titleCenter font-italic text-white">
+                                    <strong>Shop</strong>
+                                </td>
+                                <td>
+                                    <img src="images/titleRight_big.png" />
+                                </td>
+                            </tr>
+                        </table>
+                        <ul class="pl-0">
+                            <?php
+                            foreach($category->sub_categories as $subCategory){
+                                echo "<li class='pl-2'>";
+                                    // <a [routerLink]="['/shop/category', category.id]" [class.selected]="category.id === shopService.selectedCategory.id">{{category.title.name}}</a>
+                                    echo "<a href='".changeParam("categoryId", $subCategory->id)."'>".$subCategory->title->name;
+                                    //<ul *ngIf="shopService.selectedCategory && category.sub_categories && (category.id === shopService.selectedCategory.id || category.id === shopService.selectedCategory.parent_id)">
+                                    //    <li *ngFor="let subCategory of category.sub_categories" (click)="onSelect(subCategory); $event.stopPropagation();">
+                                    //        <a [routerLink]="['/shop/category', subCategory.id]" [class.selected]="subCategory.id === shopService.selectedCategory.id">{{subCategory.title.name}}</a>
+                                    //    </li>
+                                    //</ul>
+                                    echo "</a>";
+                                echo "</li>";
+                            }
+                            ?>
+                        </ul>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col">
+                    <?php var_dump($category); ?>
+                </div>
+                <div class="col-2">
+                
+                </div>
+            </div>
             
             <!--
                 <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-3">
@@ -87,7 +140,6 @@
                     </div>
                 </nav>
             -->
-            </div>
             
             <footer id="footer" class="px-3 mt-5">
                 <p class="text-muted p-1">&copy;&nbsp;Tchoukball&nbsp;Promotion
