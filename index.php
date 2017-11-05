@@ -15,7 +15,7 @@
         if($selectedCategoryId == $rootCategory->id){
             $selectedCategory = $rootCategory;
         }
-        
+
         foreach($rootCategory->sub_categories as $category){
             if($selectedCategoryId == $category->id){
                 $selectedCategory = $category;
@@ -28,6 +28,17 @@
             }
         }
     }
+    
+    // get products
+    $products;
+    if(isset($selectedCategory) && !$selectedCategory->sub_categories){
+        $URL = "http://localhost/tchoukcom/backend/v1/public/api/shopproducts/".$selectedCategoryId;
+        $dataStr = file_get_contents($URL);
+        if (!empty($dataStr)) {
+            $products = json_decode($dataStr);
+        }
+    }
+    
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -134,12 +145,35 @@
                                     foreach($selectedCategory->sub_categories as $selectedSubCategory){
                                         echo "<div class='col-lg-3 categoryItemCol'>";
                                             echo "<div class='categoryItem'>";
-                                                echo "<img src='categoryImages/".$selectedSubCategory->title->image_filename."'"
-                                                    ."class='img-fluid'"
-                                                    ."/>";
                                                 echo "<a href='".changeParam("categoryId", $selectedSubCategory->id)."'>";
+                                                    $categoryImage = "categoryImages/".$selectedSubCategory->title->image_filename;
+                                                    $imgSrc = file_exists($categoryImage)?$categoryImage:"categoryImages/noCategoryImage.jpg";
+                                                    echo "<img class='img-fluid' src='".$imgSrc."'"
+                                                        ."alt='".$selectedSubCategory->title->name."'" 
+                                                        ."title='".$selectedSubCategory->title->name."'"
+                                                        ."/>";
                                                     echo "<div class='categoryName'>".$selectedSubCategory->title->name."</div>";
                                                     echo "<div class='numberOfProd'>(".$selectedSubCategory->nb_products." Produits)</div>";
+                                                echo "</a>";
+                                            echo "</div>";
+                                        echo "</div>";
+                                    }
+                                echo "</div>";
+                            } else if(isset($selectedCategory) && isset($products)){
+                                echo "<div class='row row-nested row-eq-height'>";
+                                    foreach($products as $product){
+                                        echo "<div class='col-lg-3 productItemCol'>";
+                                            echo "<div class='productItem'>";
+                                                echo "<a href='".changeParam("productId", $product->id)."'>";
+                                                    $productImage = "productImages/".$product->code."_photoppale.jpg";
+                                                    $imgSrc = file_exists($productImage)?$productImage:"productImages/noProductImage.jpg";
+                                                    echo "<img class='img-fluid mx-auto d-block' src='".$imgSrc."'"
+                                                        ."alt='".$product->title->title."'" 
+                                                        ."title='".$product->title->title."'"
+                                                        ."/>";
+                                                    echo "<div class='productTitle'>".$product->title->title."</div>";
+                                                    echo "<div class='productCode'>Réf: ".$product->code."</div>";
+                                                    echo "<div class='productDescription'>".mb_strimwidth($product->title->small_description,0,50," ...")."</div>";
                                                 echo "</a>";
                                             echo "</div>";
                                         echo "</div>";
