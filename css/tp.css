@@ -13,14 +13,19 @@ a, a:hover {
     text-decoration: none;
 }
 
-.element {
+.box {
     background-color: #d6d6d6;
     border: 1px solid #f07b0e;
     color: #575656;
     margin-top: 10px;
 }
 
+.row-nested{
+    margin: 0.3em;
+}
+
 #title {
+    margin-top: -1px;
     font-size: 2.5rem;
 }
 #title td{
@@ -76,6 +81,11 @@ a, a:hover {
     background-position: right center;
 }
 
+.categoryCol{
+    padding: 0;
+    z-index: 1000;
+}
+
 #categoryMenu{
     border-radius: 10px 0 0;
 }
@@ -105,6 +115,34 @@ a, a:hover {
 #categoryMenu li a:hover {
     color: #f07b0e;
     font-weight: bold;
+}
+
+.categoryItemCol{
+    padding: 5px;
+}
+.categoryItem {
+    background: rgba(0, 0, 0, 0) -moz-linear-gradient(center top , #ffffff 0%, #ffffff 60%, #cccccc 100%) repeat scroll 0 0;
+    border-radius: 20px;
+    box-shadow: 2px 2px 5px #888888;
+    height: 100%;
+    /* margin: 5px; */
+    padding: 5px;
+    text-align: center;
+    /* width: 167px; */
+}
+.categoryItem img{
+    width: 80%;
+}
+.categoryItem .categoryName {
+    color: #575656;
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+}
+.categoryItem .numberOfProd {
+    color: #575656;
+    font-size: 10px;
+    text-decoration: none;
 }
 
 #footer {

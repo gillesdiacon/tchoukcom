@@ -2,14 +2,31 @@
     require_once("lib/fct.php");
     
     $lang = getGETval("lang","fr");
-    $categoryId = getGETval("categoryId", 10);
+    $selectedCategoryId = getGETval("categoryId", 10);
     
     // get category tree
-    $category;
-    $URL = "http://localhost/tchoukcom/backend/v1/public/api/shopcategory/".$categoryId;
+    $rootCategory;
+    $selectedCategory;
+    $URL = "http://localhost/tchoukcom/backend/v1/public/api/shopcategory/10";
     $dataStr = file_get_contents($URL);
     if (!empty($dataStr)) {
-        $category = json_decode($dataStr);
+        $rootCategory = json_decode($dataStr);
+        
+        if($selectedCategoryId == $rootCategory->id){
+            $selectedCategory = $rootCategory;
+        }
+        
+        foreach($rootCategory->sub_categories as $category){
+            if($selectedCategoryId == $category->id){
+                $selectedCategory = $category;
+            }else if($category->sub_categories){
+                foreach($category->sub_categories as $subCategory){
+                    if($selectedCategoryId == $subCategory->id){
+                        $selectedCategory = $subCategory;
+                    }
+                }
+            }
+        }
     }
 ?>
 <!DOCTYPE html>
@@ -74,9 +91,9 @@
                 </div>
             </div>
             
-            <div class="row no-gutters">
-                <div class="col-2">
-                    <div id="categoryMenu" class="element">
+            <div class="row">
+                <div class="col-2 categoryCol">
+                    <div id="categoryMenu" class="box">
                         <table id="title" class="ml-5">
                             <tr>
                                 <td>
@@ -92,25 +109,47 @@
                         </table>
                         <ul class="pl-0">
                             <?php
-                            foreach($category->sub_categories as $subCategory){
-                                echo "<li class='pl-2'>";
-                                    // <a [routerLink]="['/shop/category', category.id]" [class.selected]="category.id === shopService.selectedCategory.id">{{category.title.name}}</a>
-                                    echo "<a href='".changeParam("categoryId", $subCategory->id)."'>".$subCategory->title->name;
-                                    //<ul *ngIf="shopService.selectedCategory && category.sub_categories && (category.id === shopService.selectedCategory.id || category.id === shopService.selectedCategory.parent_id)">
-                                    //    <li *ngFor="let subCategory of category.sub_categories" (click)="onSelect(subCategory); $event.stopPropagation();">
-                                    //        <a [routerLink]="['/shop/category', subCategory.id]" [class.selected]="subCategory.id === shopService.selectedCategory.id">{{subCategory.title.name}}</a>
-                                    //    </li>
-                                    //</ul>
-                                    echo "</a>";
-                                echo "</li>";
-                            }
+                                foreach($rootCategory->sub_categories as $category){
+                                    echo "<li class='pl-2'>";
+                                        echo "<a href='".changeParam("categoryId", $category->id)."'>".$category->title->name."</a>";
+                                        if($category->sub_categories && $selectedCategoryId == $category->id){
+                                            foreach($category->sub_categories as $subCategory){
+                                                echo "<li class='pl-4'>";
+                                                    echo "<a href='".changeParam("categoryId", $subCategory->id)."'>".$subCategory->title->name."</a>";
+                                                echo "</li>";
+                                            }
+                                        }
+                                    echo "</li>";
+                                }
                             ?>
                         </ul>
                     </div>
                 </div>
                 <div class="clearfix"></div>
                 <div class="col">
-                    <?php var_dump($category); ?>
+                    <div id="shopContainer" class="shopBox box">
+                        <?php 
+                            if(isset($selectedCategory) && $selectedCategory->sub_categories){
+                                echo "<div class='row row-nested row-eq-height'>";
+                                    foreach($selectedCategory->sub_categories as $selectedSubCategory){
+                                        echo "<div class='col-lg-3 categoryItemCol'>";
+                                            echo "<div class='categoryItem'>";
+                                                echo "<img src='categoryImages/".$selectedSubCategory->title->image_filename."'"
+                                                    ."class='img-fluid'"
+                                                    ."/>";
+                                                echo "<a href='".changeParam("categoryId", $selectedSubCategory->id)."'>";
+                                                    echo "<div class='categoryName'>".$selectedSubCategory->title->name."</div>";
+                                                    echo "<div class='numberOfProd'>(".$selectedSubCategory->nb_products." Produits)</div>";
+                                                echo "</a>";
+                                            echo "</div>";
+                                        echo "</div>";
+                                    }
+                                echo "</div>";
+                            } else {
+                                echo "<div class='text-center'>Pas de produit pour cette catégorie</div>";
+                            }
+                        ?>
+                    </div>
                 </div>
                 <div class="col-2">
                 
