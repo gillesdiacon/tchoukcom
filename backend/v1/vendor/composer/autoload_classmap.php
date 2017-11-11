@@ -11,6 +11,7 @@ return array(
     'TcBern\\Model\\Price' => $baseDir . '/private/models/Price.php',
     'TcBern\\Model\\Product' => $baseDir . '/private/models/Product.php',
     'TcBern\\Model\\ProductI18n' => $baseDir . '/private/models/ProductI18n.php',
+    'TcBern\\Model\\ProductVariantValue' => $baseDir . '/private/models/ProductVariantValue.php',
     'TcBern\\Model\\Variant' => $baseDir . '/private/models/Variant.php',
     'TcBern\\Model\\VariantType' => $baseDir . '/private/models/VariantType.php',
     'TcBern\\Model\\VariantTypeI18n' => $baseDir . '/private/models/VariantTypeI18n.php',
