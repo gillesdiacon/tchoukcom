@@ -178,6 +178,49 @@ a, a:hover {
     padding-right: 10px;
     word-wrap: break-word;
 }
+.productItem .variantTitle {
+    font-size: 80%;
+}
+.productItem .productVariant ul {
+    list-style-type: none;
+}
+.productItem .productVariant ul li {
+    font-size: 65%;
+    border: 1px solid #575656;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px #888888;
+    display: inline-block;
+}
+.productItem .productVariant ul li a {
+    color: #000000;
+}
+.productItem .productVariant ul li.available:hover {
+    background-color: #f07b0e;
+    border-color: #f07b0e;
+}
+.productItem .productVariant ul li.available:hover a {
+    color: #000000;
+}
+.productItem .productVariant ul li.active {
+    background-color: #f07b0e;
+    border-color: #f07b0e;
+}
+.productItem .productVariant ul li.active a {
+    color: #000000;
+}
+.productItem .productVariant ul li.disabledLink {
+    border-color: #999999;
+}
+.productItem .productVariant ul li.disabledLink a {
+    color: #999999;
+}
+.productItem .productPrice {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    color: #f07b0e;
+    font-weight: bold;
+}
 
 #footer {
     border-radius: 10px 10px 0px 0px;

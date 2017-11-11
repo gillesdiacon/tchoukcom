@@ -39,7 +39,6 @@
         $dataStr = file_get_contents($URL);
         if (!empty($dataStr)) {
             $products = json_decode($dataStr);
-        }
     }
     
 ?>
@@ -170,7 +169,7 @@
                                         echo "</div>";
                                     }
                                 echo "</div>";
-                            } else if(isset($selectedCategory) && isset($products)){
+                            } else if(isset($selectedCategory) && isset($products) && count($products)>0){
                                 echo "<div class='row row-nested row-eq-height'>";
                                     foreach($products as $product){
                                         echo "<div class='col-lg-3 productItemCol'>";
@@ -186,6 +185,30 @@
                                                     echo "<div class='productCode'>Réf: ".$product->code."</div>";
                                                     echo "<div class='productDescription'>".mb_strimwidth($product->title->small_description,0,50," ...")."</div>";
                                                 echo "</a>";
+                                                
+                                                if($product->variant && $product->variant->types){
+                                                    foreach($product->variant->types as $variantType){
+                                                        echo "<div class='productVariant'>";
+                                                            echo "<div class='variantTitle'>".$variantType->name->name.":</div>";
+                                                            echo "<ul class='pl-2'>";
+                                                                foreach($variantType->values as $variantValue){
+                                                                    $variantValueClass = "";
+                                                                    if($variantValue->id == $variantType->selectedValueId){
+                                                                        $variantValueClass = "active";
+                                                                    }
+                                                                    echo "<li class='px-1 m-1 ".$variantValueClass."'"
+                                                                        ."title='".$variantType->name->name.": ".$variantValue->name->name."'>";
+                                                                        echo "<a href=''>".$variantValue->name->name."</a>";
+                                                                    echo "</li>";
+                                                                }
+                                                            echo "</ul>";
+                                                        echo "</div>";
+                                                    }
+                                                }
+                                                echo "<div class='mt-5'>";
+                                                    echo "<div class='text-right m-3 productPrice'>".$product->price->price." chf</div>";
+                                                echo "</div>";
+
                                             echo "</div>";
                                         echo "</div>";
                                     }
