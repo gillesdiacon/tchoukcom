@@ -7,6 +7,7 @@
     // get category tree
     $rootCategory;
     $selectedCategory;
+    $parentCategory;
     $URL = "http://localhost/tchoukcom/backend/v1/public/api/shopcategory/10";
     $dataStr = file_get_contents($URL);
     if (!empty($dataStr)) {
@@ -19,10 +20,12 @@
         foreach($rootCategory->sub_categories as $category){
             if($selectedCategoryId == $category->id){
                 $selectedCategory = $category;
+                $parentCategory = $category;
             }else if($category->sub_categories){
                 foreach($category->sub_categories as $subCategory){
                     if($selectedCategoryId == $subCategory->id){
                         $selectedCategory = $subCategory;
+                        $parentCategory = $category;
                     }
                 }
             }
@@ -121,11 +124,19 @@
                         <ul class="pl-0">
                             <?php
                                 foreach($rootCategory->sub_categories as $category){
-                                    echo "<li class='pl-2'>";
+                                    $categoryClass = "";
+                                    if($selectedCategoryId == $category->id || $parentCategory->id == $category->id){
+                                        $categoryClass = "selected";
+                                    }
+                                    echo "<li class='pl-2 " . $categoryClass . "'>";
                                         echo "<a href='".changeParam("categoryId", $category->id)."'>".$category->title->name."</a>";
-                                        if($category->sub_categories && $selectedCategoryId == $category->id){
+                                        if($category->sub_categories && ($selectedCategoryId == $category->id || $parentCategory->id == $category->id)){
                                             foreach($category->sub_categories as $subCategory){
-                                                echo "<li class='pl-4'>";
+                                                $subCategoryClass = "";
+                                                if($selectedCategoryId == $subCategory->id){
+                                                    $subCategoryClass = "selected";
+                                                }
+                                                echo "<li class='pl-4 " . $subCategoryClass . "'>";
                                                     echo "<a href='".changeParam("categoryId", $subCategory->id)."'>".$subCategory->title->name."</a>";
                                                 echo "</li>";
                                             }

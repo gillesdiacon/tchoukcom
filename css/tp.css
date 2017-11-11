@@ -97,24 +97,22 @@ a, a:hover {
 #categoryMenu ul ul {
 }
 #categoryMenu li {
-    cursor: pointer;
     border-top: 1px solid #575656;
 }
 #categoryMenu li a {
+    display: block;
+    width: 100%;
     color: #575656;
     font-weight: normal;
 }
-#categoryMenu li a.selected {
+#categoryMenu li.selected a {
     color: #f07b0e;
-    font-weight: bold;
 }
-#categoryMenu li a.active {
+#categoryMenu li.active a {
     color: #f07b0e;
-    font-weight: bold;
 }
-#categoryMenu li a:hover {
+#categoryMenu li:hover a {
     color: #f07b0e;
-    font-weight: bold;
 }
 
 .categoryItemCol{
