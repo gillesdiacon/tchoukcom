@@ -229,6 +229,49 @@ $app->get(
     }
 )->add($headerMw);
 
+$app->get(
+    '/api/shopproduct/{productId}',
+    function(Request $request, Response $response, $args) {
+
+        global $languageId;
+        $languageId = 2;
+        
+        global $priceListId;
+        $priceListId = 1;
+        
+        $productId = $args['productId'];
+        
+
+        
+        $product = TcBern\Model\Product::
+        where('id', $productId)
+        ->with(['title','price', 'variant'])
+        ->variantProduct()
+        ->first();
+        
+        if($product==null){
+            $product = TcBern\Model\Product::
+                where('id', $productId)
+                ->with(['title','price'])
+                ->simpleProduct()
+                ->first();
+        }
+        
+        if($product!=null){
+            return $response->getBody()->write($product->toJson());
+        }else{
+            return $response->getBody()->write("");
+        }
+        
+        // global $container;
+        // $sql_array = $container['db']->connection()->getQueryLog();
+        // $sql_json = json_encode($sql_array);
+        // $response->getBody()->write($sql_json);
+        return $response;
+    }
+)->add($headerMw);
+
+
 // handle GET requests for /entity
 $app->get(
     '/api/{entity}',

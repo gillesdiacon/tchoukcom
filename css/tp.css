@@ -222,6 +222,18 @@ a, a:hover {
     font-weight: bold;
 }
 
+.productDetail {
+    background: rgba(0, 0, 0, 0) -moz-linear-gradient(center top , #cccccc 0%, #ffffff 60%, #ffffff 100%) repeat scroll 0 0;   
+}
+.productDetail .productTitle {
+    color: #f07b0e;
+}
+.productDetail .productPanel {
+    background: rgba(0, 0, 0, 0) -moz-linear-gradient(center top , #ffffff 0%, #ffffff 60%, #cccccc 100%) repeat scroll 0 0;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px #888888;
+}
+
 #footer {
     border-radius: 10px 10px 0px 0px;
     -moz-border-radius: 10px 10px 0px 0px;

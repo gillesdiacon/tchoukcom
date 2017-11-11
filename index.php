@@ -1,8 +1,9 @@
 <?php
     require_once("lib/fct.php");
     
-    $lang = getGETval("lang","fr");
-    $selectedCategoryId = getGETval("categoryId", 10);
+    $lang = getGETvalOrDefault("lang","fr");
+    $selectedCategoryId = getGETvalOrDefault("categoryId", 10);
+    $selectedProductId = getGETval("productId");
     
     // get category tree
     $rootCategory;
@@ -42,6 +43,15 @@
         }
     }
     
+    // get product
+    $selectedProduct;
+    if(isset($selectedCategory) && isset($selectedProductId)){
+        $URL = "http://localhost/tchoukcom/backend/v1/public/api/shopproduct/".$selectedProductId;
+        $dataStr = file_get_contents($URL);
+        if (!empty($dataStr)) {
+            $selectedProduct = json_decode($dataStr);
+        }
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -129,7 +139,7 @@
                                         $categoryClass = "selected";
                                     }
                                     echo "<li class='pl-2 " . $categoryClass . "'>";
-                                        echo "<a href='".changeParam("categoryId", $category->id)."'>".$category->title->name."</a>";
+                                        echo "<a href='?categoryId=".$category->id."'>".$category->title->name."</a>";
                                         if($category->sub_categories && ($selectedCategoryId == $category->id || $parentCategory->id == $category->id)){
                                             foreach($category->sub_categories as $subCategory){
                                                 $subCategoryClass = "";
@@ -137,7 +147,7 @@
                                                     $subCategoryClass = "selected";
                                                 }
                                                 echo "<li class='pl-4 " . $subCategoryClass . "'>";
-                                                    echo "<a href='".changeParam("categoryId", $subCategory->id)."'>".$subCategory->title->name."</a>";
+                                                    echo "<a href='?categoryId=".$subCategory->id."'>".$subCategory->title->name."</a>";
                                                 echo "</li>";
                                             }
                                         }
@@ -169,6 +179,50 @@
                                             echo "</div>";
                                         echo "</div>";
                                     }
+                                echo "</div>";
+                            } else if(isset($selectedCategory) && isset($selectedProduct)){
+                                echo "<div class='p-3'>";
+                                    echo "<div class='px-3 productItem productDetail'>";
+                                        echo "<div class='pl-4 productTitle'>".$selectedProduct->title->title."</div>";
+                                        echo "<div class='pl-3 productCode'>Réf: ".$selectedProduct->code."</div>";
+                                        echo "<div class='productDescription'>".$selectedProduct->title->small_description."</div>";
+                                        
+                                        echo "<div class='row row-nested row-eq-height'>";
+                                            echo "<div class='col-lg-4'>";
+                                                $productImage = "productImages/".$selectedProduct->code."_photoppale.jpg";
+                                                $imgSrc = file_exists($productImage)?$productImage:"productImages/noProductImage.jpg";
+                                                echo "<img class='img-fluid mx-auto d-block' src='".$imgSrc."'"
+                                                    ."alt='".$selectedProduct->title->title."'" 
+                                                    ."title='".$selectedProduct->title->title."'"
+                                                    ."/>";
+                                            echo "</div>";
+                                            echo "<div class='col-lg productPanel'>";
+                                                if(isset($selectedProduct->variant) && $selectedProduct->variant && $selectedProduct->variant->types){
+                                                    foreach($selectedProduct->variant->types as $variantType){
+                                                        echo "<div class='productVariant'>";
+                                                            echo "<div class='variantTitle'>".$variantType->name->name.":</div>";
+                                                            echo "<ul class='pl-2'>";
+                                                                foreach($variantType->values as $variantValue){
+                                                                    $variantValueClass = "";
+                                                                    if($selectedProduct->id == $variantValue->product_variant_value->product_id){
+                                                                        $variantValueClass = "active";
+                                                                    }
+                                                                    echo "<li class='px-1 m-1 ".$variantValueClass."'"
+                                                                        ."title='".$variantType->name->name.": ".$variantValue->name->name."'>";
+                                                                        echo "<a href='".changeParam("productId", $variantValue->product_variant_value->product_id)."'>".$variantValue->name->name."</a>";
+                                                                    echo "</li>";
+                                                                }
+                                                            echo "</ul>";
+                                                        echo "</div>";
+                                                    }
+                                                }
+                                                echo "<div class='mt-5'>";
+                                                    echo "<div class='text-right m-3 productPrice'>".$selectedProduct->price->price." chf</div>";
+                                                echo "</div>";
+                                            echo "</div>";
+                                        echo "</div>";
+
+                                    echo "</div>";
                                 echo "</div>";
                             } else if(isset($selectedCategory) && isset($products) && count($products)>0){
                                 echo "<div class='row row-nested row-eq-height'>";

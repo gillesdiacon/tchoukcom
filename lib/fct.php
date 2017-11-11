@@ -26,15 +26,15 @@ function changeParam($paramName, $default){
 	return $script . "?" . substr($paramStr,1);
 }
 
-function getPOSTval($field,$default){
-	$val = $default;
-	if(isset($_POST[$field])){
-		$val=$_POST[$field];
-	}
-	return $val;
+function getGETval($field){
+	if(isset($_GET[$field])){
+		return $_GET[$field];
+	}else{
+        return null;
+    }
 }
 
-function getGETval($field,$default){
+function getGETvalOrDefault($field,$default){
 	$val = $default;
 	if(isset($_GET[$field])){
 		$val=$_GET[$field];
