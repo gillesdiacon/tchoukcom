@@ -39,6 +39,7 @@
         $dataStr = file_get_contents($URL);
         if (!empty($dataStr)) {
             $products = json_decode($dataStr);
+        }
     }
     
 ?>
@@ -193,12 +194,12 @@
                                                             echo "<ul class='pl-2'>";
                                                                 foreach($variantType->values as $variantValue){
                                                                     $variantValueClass = "";
-                                                                    if($variantValue->id == $variantType->selectedValueId){
+                                                                    if($product->id == $variantValue->product_variant_value->product_id){
                                                                         $variantValueClass = "active";
                                                                     }
                                                                     echo "<li class='px-1 m-1 ".$variantValueClass."'"
                                                                         ."title='".$variantType->name->name.": ".$variantValue->name->name."'>";
-                                                                        echo "<a href=''>".$variantValue->name->name."</a>";
+                                                                        echo "<a href='".changeParam("productId", $variantValue->product_variant_value->product_id)."'>".$variantValue->name->name."</a>";
                                                                     echo "</li>";
                                                                 }
                                                             echo "</ul>";

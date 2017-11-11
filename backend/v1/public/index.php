@@ -213,13 +213,11 @@ $app->get(
         
         $products = TcBern\Model\Product::
         where('category_id', $categoryId)
-        ->with(['title','price', 'variant', 'selectedVariants'])
+        ->with(['title','price', 'variant'])
         ->variantProduct()
         ->unionAll($productsWithoutVariantQuery)
         ->orderBy('code')
         ->get();
-        
-        postConstructProduct($products);
         
         $response->getBody()->write($products->toJson());
         
@@ -230,22 +228,6 @@ $app->get(
         return $response;
     }
 )->add($headerMw);
-
-function postConstructProduct($products){
-    foreach($products as $product){
-        if($product->variant){
-            foreach($product->variant->types as $variantType){
-                foreach($product->selectedVariants as $selectedVariant){
-                    if($variantType->id == $selectedVariant->variant_type_id){
-                        $variantType->selectedValueId = $selectedVariant->pivot->variant_value_id;
-                    }
-                }
-            }
-        }
-        
-        $product->makeHidden('selectedVariants');
-    }
-}
 
 // handle GET requests for /entity
 $app->get(

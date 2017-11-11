@@ -21,10 +21,6 @@ class Product extends Model {
     public function variant(){
         return $this->hasOne('TcBern\Model\Variant','id','variant_id');
     }
-    
-    public function selectedVariants(){
-        return $this->belongsToMany('TcBern\Model\VariantValue');
-    }
 
     public function scopeSimpleProduct($query){
         return $query->where('variant_id', 0);
