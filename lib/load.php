@@ -1,0 +1,19 @@
+<?php
+	//session_start();
+	require_once("lib/fct.php");
+	require_once("lib/db.php");
+	require_once("lib/query.php");
+	//require_once("lib/class/error.class.php");
+	//require_once("lib/class/field.class.php");
+	//require_once("lib/class/news.class.php");
+	require_once("lib/class/category.class.php");
+	//require_once("lib/class/album.class.php");
+	//require_once("lib/class/image.class.php");
+	//require_once("lib/class/table.class.php");
+	
+	//require_once("lib/class/country.class.php");
+	//require_once("lib/class/team.class.php");
+	//require_once("lib/class/player.class.php");
+	//require_once("lib/class/type.class.php");
+	//require_once("lib/class/game.class.php");
+?>

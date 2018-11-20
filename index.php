@@ -1,47 +1,42 @@
 <?php
-    require_once("lib/fct.php");
+    require_once("lib/load.php");
     
     $lang = getGETvalOrDefault("lang","fr");
-    $selectedCategoryId = getGETvalOrDefault("categoryId", 10);
+    $languageIds=array("en"=>1, "fr"=>2, "de"=>4, "it"=>5);
+    if(!array_key_exists($lang, $languageIds)){
+        $lang = "fr";
+    }
+    $langId = $languageIds[$lang];
+    
+    $rootCategoryId = 10;
+    $selectedCategoryId = getGETvalOrDefault("categoryId", $rootCategoryId);
     $selectedProductId = getGETval("productId");
     
-    // get category tree
-    $rootCategory;
-    $selectedCategory;
-    $parentCategory;
-    $URL = "http://localhost/tchoukcom/backend/v1/public/api/shopcategory/10";
-    $dataStr = file_get_contents($URL);
-    if (!empty($dataStr)) {
-        $rootCategory = json_decode($dataStr);
-        
-        if($selectedCategoryId == $rootCategory->id){
-            $selectedCategory = $rootCategory;
-        }
+    // get root categories
+    $categories = getCategoriesByParentId($rootCategoryId, $langId);
 
-        foreach($rootCategory->sub_categories as $category){
-            if($selectedCategoryId == $category->id){
-                $selectedCategory = $category;
-                $parentCategory = $category;
-            }else if($category->sub_categories){
-                foreach($category->sub_categories as $subCategory){
-                    if($selectedCategoryId == $subCategory->id){
-                        $selectedCategory = $subCategory;
-                        $parentCategory = $category;
-                    }
-                }
+    // get selected category
+    $selectedCategory = getCategoryById($selectedCategoryId, $langId);
+    
+    // get sub categories
+    $subCategories = array();
+    if ($selectedCategoryId != $rootCategoryId) {
+        foreach($categories as $category){
+            if ($selectedCategoryId == $category->id || $selectedCategory->parent_id == $category->id) {
+                $category->sub_categories = getCategoriesByParentId($category->id, $langId);
             }
         }
     }
-    
+
     // get products
     $products;
-    if(isset($selectedCategory) && !$selectedCategory->sub_categories){
-        $URL = "http://localhost/tchoukcom/backend/v1/public/api/shopproducts/".$selectedCategoryId;
-        $dataStr = file_get_contents($URL);
-        if (!empty($dataStr)) {
-            $products = json_decode($dataStr);
-        }
-    }
+    //if(isset($selectedCategory) && !$selectedCategory->sub_categories){
+    //    $URL = "http://localhost/tchoukcom/backend/v1/public/api/shopproducts/".$selectedCategoryId;
+    //    $dataStr = file_get_contents($URL);
+    //    if (!empty($dataStr)) {
+    //        $products = json_decode($dataStr);
+    //    }
+    //}
     
     // get product
     $selectedProduct;
@@ -132,24 +127,22 @@
                             </tr>
                         </table>
                         <ul class="pl-0">
-                            <?php
-                                foreach($rootCategory->sub_categories as $category){
+                            <?php                            
+                                foreach($categories as $category){
                                     $categoryClass = "";
-                                    if($selectedCategoryId == $category->id || $parentCategory->id == $category->id){
+                                    if($selectedCategoryId == $category->id || $selectedCategory->parent_id == $category->id){
                                         $categoryClass = "selected";
                                     }
                                     echo "<li class='pl-2 " . $categoryClass . "'>";
-                                        echo "<a href='?categoryId=".$category->id."'>".$category->title->name."</a>";
-                                        if($category->sub_categories && ($selectedCategoryId == $category->id || $parentCategory->id == $category->id)){
-                                            foreach($category->sub_categories as $subCategory){
-                                                $subCategoryClass = "";
-                                                if($selectedCategoryId == $subCategory->id){
-                                                    $subCategoryClass = "selected";
-                                                }
-                                                echo "<li class='pl-4 " . $subCategoryClass . "'>";
-                                                    echo "<a href='?categoryId=".$subCategory->id."'>".$subCategory->title->name."</a>";
-                                                echo "</li>";
+                                        echo "<a href='?categoryId=".$category->id."'>".$category->name."</a>";
+                                        foreach($category->sub_categories as $subCategory){
+                                            $subCategoryClass = "";
+                                            if($selectedCategoryId == $subCategory->id){
+                                                $subCategoryClass = "selected";
                                             }
+                                            echo "<li class='pl-4 " . $subCategoryClass . "'>";
+                                                echo "<a href='?categoryId=".$subCategory->id."'>".$subCategory->name."</a>";
+                                            echo "</li>";
                                         }
                                     echo "</li>";
                                 }
@@ -161,19 +154,19 @@
                 <div class="col">
                     <div id="shopContainer" class="shopBox box">
                         <?php 
-                            if(isset($selectedCategory) && $selectedCategory->sub_categories){
+                            if(!empty($category->sub_categories)){
                                 echo "<div class='row row-nested row-eq-height'>";
-                                    foreach($selectedCategory->sub_categories as $selectedSubCategory){
+                                    foreach($category->sub_categories as $selectedSubCategory){
                                         echo "<div class='col-lg-3 categoryItemCol'>";
                                             echo "<div class='categoryItem'>";
                                                 echo "<a href='".changeParam("categoryId", $selectedSubCategory->id)."'>";
-                                                    $categoryImage = "categoryImages/".$selectedSubCategory->title->image_filename;
+                                                    $categoryImage = "categoryImages/".$selectedSubCategory->image_filename;
                                                     $imgSrc = file_exists($categoryImage)?$categoryImage:"categoryImages/noCategoryImage.jpg";
                                                     echo "<img class='img-fluid' src='".$imgSrc."'"
-                                                        ."alt='".$selectedSubCategory->title->name."'" 
-                                                        ."title='".$selectedSubCategory->title->name."'"
+                                                        ."alt='".$selectedSubCategory->name."'" 
+                                                        ."title='".$selectedSubCategory->name."'"
                                                         ."/>";
-                                                    echo "<div class='categoryName'>".$selectedSubCategory->title->name."</div>";
+                                                    echo "<div class='categoryName'>".$selectedSubCategory->name."</div>";
                                                     echo "<div class='numberOfProd'>(".$selectedSubCategory->nb_products." Produits)</div>";
                                                 echo "</a>";
                                             echo "</div>";
