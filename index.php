@@ -2,6 +2,7 @@
     require_once("lib/load.php");
     $dbService = new DbService();
     $categoryService = new CategoryService($dbService);
+    $productService = new ProductService($dbService);
     
     $lang = getGETvalOrDefault("lang","fr");
     $langId = getLangId($lang);
@@ -29,13 +30,20 @@
 
     // get products
     $products;
-    //if(isset($selectedCategory) && !$selectedCategory->sub_categories){
-    //    $URL = "http://localhost/tchoukcom/backend/v1/public/api/shopproducts/".$selectedCategoryId;
-    //    $dataStr = file_get_contents($URL);
-    //    if (!empty($dataStr)) {
-    //        $products = json_decode($dataStr);
-    //    }
-    //}
+    if(isset($selectedCategory) && !$selectedCategory->sub_categories){
+        $simpleProducts = $productService->getProductsByCategoryId($selectedCategory->id, $langId, "simple");
+        $variantProducts = $productService->getProductsByCategoryId($selectedCategory->id, $langId, "variant");
+
+        $products = array_merge($simpleProducts, $variantProducts);
+        
+        // oder by id
+        usort(
+            $products, 
+            function($a, $b){
+                return strcmp($a->id, $b->id);
+            }
+        );
+    }
     
     // get product
     $selectedProduct;
@@ -225,27 +233,28 @@
                                                     $productImage = "productImages/".$product->code."_photoppale.jpg";
                                                     $imgSrc = file_exists($productImage)?$productImage:"productImages/noProductImage.jpg";
                                                     echo "<img class='img-fluid mx-auto d-block' src='".$imgSrc."'"
-                                                        ."alt='".$product->title->title."'" 
-                                                        ."title='".$product->title->title."'"
+                                                        ."alt='".$product->title."'" 
+                                                        ."title='".$product->title."'"
                                                         ."/>";
-                                                    echo "<div class='productTitle'>".$product->title->title."</div>";
+                                                    echo "<div class='productTitle'>".$product->title."</div>";
                                                     echo "<div class='productCode'>Réf: ".$product->code."</div>";
-                                                    echo "<div class='productDescription'>".mb_strimwidth($product->title->small_description,0,50," ...")."</div>";
+                                                    echo "<div class='productDescription'>".mb_strimwidth($product->small_description,0,50," ...")."</div>";
                                                 echo "</a>";
                                                 
-                                                if($product->variant && $product->variant->types){
-                                                    foreach($product->variant->types as $variantType){
+                                                if(!empty($product->variant_types)){
+                                                    foreach($product->variant_types as $variantType){
                                                         echo "<div class='productVariant'>";
-                                                            echo "<div class='variantTitle'>".$variantType->name->name.":</div>";
+                                                            echo "<div class='variantTitle'>".$variantType->name.":</div>";
                                                             echo "<ul class='pl-2'>";
                                                                 foreach($variantType->values as $variantValue){
                                                                     $variantValueClass = "";
-                                                                    if($product->id == $variantValue->product_variant_value->product_id){
-                                                                        $variantValueClass = "active";
-                                                                    }
+                                                                    //if($product->id == $variantValue->product_variant_value->product_id){
+                                                                    //    $variantValueClass = "active";
+                                                                    //}
                                                                     echo "<li class='px-1 m-1 ".$variantValueClass."'"
-                                                                        ."title='".$variantType->name->name.": ".$variantValue->name->name."'>";
-                                                                        echo "<a href='".changeParam("productId", $variantValue->product_variant_value->product_id)."'>".$variantValue->name->name."</a>";
+                                                                        ."title='".$variantType->name.": ".$variantValue->name."'>";
+                                                                        //echo "<a href='".changeParam("productId", $variantValue->product_variant_value->product_id)."'>".$variantValue->name."</a>";
+                                                                        echo "<a href=''>".$variantValue->name."</a>";
                                                                     echo "</li>";
                                                                 }
                                                             echo "</ul>";
@@ -253,7 +262,7 @@
                                                     }
                                                 }
                                                 echo "<div class='mt-5'>";
-                                                    echo "<div class='text-right m-3 productPrice'>".$product->price->price." chf</div>";
+                                                    echo "<div class='text-right m-3 productPrice'>".$product->price." chf</div>";
                                                 echo "</div>";
 
                                             echo "</div>";

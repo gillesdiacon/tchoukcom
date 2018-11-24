@@ -3,10 +3,14 @@
 	require_once("lib/fct.php");
 	require_once("lib/db/db.service.php");
 	require_once("lib/service/category.service.php");
+	require_once("lib/service/product.service.php");
 	//require_once("lib/class/error.class.php");
 	//require_once("lib/class/field.class.php");
 	//require_once("lib/class/news.class.php");
 	require_once("lib/class/category.class.php");
+	require_once("lib/class/product.class.php");
+	require_once("lib/class/variant.type.class.php");
+	require_once("lib/class/variant.value.class.php");
 	//require_once("lib/class/album.class.php");
 	//require_once("lib/class/image.class.php");
 	//require_once("lib/class/table.class.php");
