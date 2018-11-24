@@ -18,4 +18,8 @@ class VariantType extends Model {
     public function values(){
         return $this->hasMany('TcBern\Model\VariantValue');
     }
+    
+    public function other_values($excludeVariantValueId){
+        return $this->hasMany('TcBern\Model\VariantValue')->where('id', '!=', $excludeVariantValueId);
+    }
 }

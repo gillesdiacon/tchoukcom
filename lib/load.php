@@ -1,8 +1,8 @@
 <?php
 	//session_start();
 	require_once("lib/fct.php");
-	require_once("lib/db.php");
-	require_once("lib/query.php");
+	require_once("lib/db/db.service.php");
+	require_once("lib/service/category.service.php");
 	//require_once("lib/class/error.class.php");
 	//require_once("lib/class/field.class.php");
 	//require_once("lib/class/news.class.php");

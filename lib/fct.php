@@ -42,12 +42,14 @@ function getGETvalOrDefault($field,$default){
 	return $val;
 }
 
-function getLanguageId($language){
+function getLangId($lang){
     $languageIds=array("en"=>1, "fr"=>2, "de"=>4, "it"=>5);
-    
-    $languageId=$languageIds[$language];
-    
-    return $languageId;
+
+    if(!array_key_exists($lang, $languageIds)){
+        $lang = "fr";
+    }
+
+    return $languageIds[$lang];
 }
 
 ?>

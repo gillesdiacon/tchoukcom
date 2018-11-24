@@ -1,29 +1,28 @@
 <?php
     require_once("lib/load.php");
+    $dbService = new DbService();
+    $categoryService = new CategoryService($dbService);
     
     $lang = getGETvalOrDefault("lang","fr");
-    $languageIds=array("en"=>1, "fr"=>2, "de"=>4, "it"=>5);
-    if(!array_key_exists($lang, $languageIds)){
-        $lang = "fr";
-    }
-    $langId = $languageIds[$lang];
+    $langId = getLangId($lang);
     
     $rootCategoryId = 10;
     $selectedCategoryId = getGETvalOrDefault("categoryId", $rootCategoryId);
     $selectedProductId = getGETval("productId");
     
     // get root categories
-    $categories = getCategoriesByParentId($rootCategoryId, $langId);
+    $categories = $categoryService->getCategoriesByParentId($rootCategoryId, $langId);
 
     // get selected category
-    $selectedCategory = getCategoryById($selectedCategoryId, $langId);
+    $selectedCategory = $categoryService->getCategoryById($selectedCategoryId, $langId);
+    $selectedCategory->sub_categories = $categoryService->getCategoriesByParentId($selectedCategoryId, $langId);
     
     // get sub categories
     $subCategories = array();
     if ($selectedCategoryId != $rootCategoryId) {
         foreach($categories as $category){
             if ($selectedCategoryId == $category->id || $selectedCategory->parent_id == $category->id) {
-                $category->sub_categories = getCategoriesByParentId($category->id, $langId);
+                $category->sub_categories = $categoryService->getCategoriesByParentId($category->id, $langId);
             }
         }
     }
@@ -154,9 +153,9 @@
                 <div class="col">
                     <div id="shopContainer" class="shopBox box">
                         <?php 
-                            if(!empty($category->sub_categories)){
+                            if(!empty($selectedCategory->sub_categories)){
                                 echo "<div class='row row-nested row-eq-height'>";
-                                    foreach($category->sub_categories as $selectedSubCategory){
+                                    foreach($selectedCategory->sub_categories as $selectedSubCategory){
                                         echo "<div class='col-lg-3 categoryItemCol'>";
                                             echo "<div class='categoryItem'>";
                                                 echo "<a href='".changeParam("categoryId", $selectedSubCategory->id)."'>";

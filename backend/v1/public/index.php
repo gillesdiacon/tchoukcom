@@ -241,8 +241,6 @@ $app->get(
         
         $productId = $args['productId'];
         
-
-        
         $product = TcBern\Model\Product::
         where('id', $productId)
         ->with(['title','price', 'variant'])
@@ -270,6 +268,133 @@ $app->get(
         return $response;
     }
 )->add($headerMw);
+
+$app->get(
+    '/api/shopvariants/{productId}/{variantId}',
+    function(Request $request, Response $response, $args) {
+        global $languageId;
+        $languageId = 2;
+        
+        $productId = $args['productId'];
+        $variantId = $args['variantId'];
+        
+        $allProductVariantValues = TcBern\Model\ProductVariantValue::
+        where('variant_id', $variantId)
+        ->get();
+        
+        $productVariantValues = array();
+        foreach($allProductVariantValues as $allProductVariantValue){
+            $productVariantValues[$allProductVariantValue->product_id] []= $allProductVariantValue->variant_value_id;
+        }
+        
+        foreach($productVariantValues as $productId=>$productVariantValue){
+            $productVariantValues[$productId] = implode(",",$productVariantValue);
+        }
+        
+        $selectedProductVariantValuesObj = TcBern\Model\ProductVariantValue::
+        where('product_id', $productId)
+        ->get();
+        
+        $selectedProductVariantValues = array();
+        foreach($selectedProductVariantValuesObj as $selectedProductVariantValueObj){
+            $selectedProductVariantValues[$selectedProductVariantValueObj->variant_type_id] = $selectedProductVariantValueObj->variant_value_id;
+        }
+        
+        
+        $variant = TcBern\Model\Variant::
+        where('id', $variantId)
+        ->first();
+        
+        $temps = array();
+        foreach($variant->types as $variantType){
+            $variantTypeId = $variantType->id;
+            $variantType->selected_value = $selectedProductVariantValues[$variantType->id];
+            $variantType->other_values = $variantType->other_values($variantType->selected_value)->pluck('id');
+            
+            $temps[$variantTypeId] = new stdClass();
+            $temps[$variantTypeId]->selected_value = $variantType->selected_value;
+            $temps[$variantTypeId]->other_values = $variantType->other_values;
+        }
+        
+        // $otherTemps = array_map(function ($object) { return clone $object; }, $temps); // clone array
+        
+        // $typeIds = array_keys($temps);
+        // $nbTypes = count($typeIds);
+        // foreach($temps as $variantTypeId=>$temp){
+            
+
+            // for ($i = 0; $i < $nbTypes;$i++ ){
+            
+            // foreach($otherTemps as $otherVariantTypeId=>$otherTemp){
+                
+                // $otherSelectedValues = array();
+                // if($otherVariantTypeId != $variantTypeId){
+                    // $otherSelectedValues []= $otherTemp->selected_value;
+                // }
+                // $temp->other_selected_values = $otherSelectedValues;
+            // }            
+        // }
+        
+        $nbTypes = count($variant->types);
+        for ($i = 0; $i < $nbTypes;$i++ ){
+            $variantType = $variant->types[$i];
+            
+            $otherSelectedValues = array();
+            foreach($temps as $tempTypeId=>$temp){
+                if($variantType->id != $tempTypeId){
+                    $otherSelectedValues []= $temp->selected_value;
+                }
+            }
+            $variantType->other_selected_values = $otherSelectedValues;
+            
+            // foreach($variant->types as $otherVariantType){
+                // if($variantType->id != $otherVariantType->id){
+                    // $variantType []= $otherVariantType->id;
+                // }
+            //}
+            
+            // foreach($variant->values as $variantValue){
+                // $productVariantValues = TcBern\Model\ProductVariantValue::
+                // where('variant_value_id', $variantValue->id)
+                // ->andWhere('variant_value_id', $variantValue->id)
+                // ->get();
+            // }
+        }
+        
+        $response->getBody()->write(json_encode($variant));
+        
+        // global $container;
+        // $sql_array = $container['db']->connection()->getQueryLog();
+        // $sql_json = json_encode($sql_array);
+        // $response->getBody()->write($sql_json);
+        return $response;
+    }
+)->add($headerMw);
+
+function postConstructProduct($product){
+    if($product != null){
+        if($product->product_variant_values){
+            $productVariantValueMap = array();
+            foreach($product->product_variant_values as $productVariantValue){
+                $productVariantValueMap[$productVariantValue->variant_type_id]=$productVariantValue->variant_value_id;
+            }
+            $product->productVariantValues = $productVariantValueMap;
+        }
+
+        $product->makeHidden('product_variant_values');
+        
+        // if($product->variant){
+            // foreach($product->variant->types as $variantType){
+                // foreach($product->selectedVariants as $selectedVariant){
+                    // if($variantType->id == $selectedVariant->variant_type_id){
+                        // $variantType->selectedValueId = $selectedVariant->pivot->variant_value_id;
+                    // }
+                // }
+            // }
+        // }
+        
+    }
+}
 
 
 // handle GET requests for /entity
