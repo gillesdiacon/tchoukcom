@@ -48,11 +48,7 @@
     // get product
     $selectedProduct;
     if(isset($selectedCategory) && isset($selectedProductId)){
-        $URL = "http://localhost/tchoukcom/backend/v1/public/api/shopproduct/".$selectedProductId;
-        $dataStr = file_get_contents($URL);
-        if (!empty($dataStr)) {
-            $selectedProduct = json_decode($dataStr);
-        }
+        $selectedProduct = $productService->getProductById($selectedProductId, $langId);
     }
 ?>
 <!DOCTYPE html>
@@ -183,33 +179,45 @@
                             } else if(isset($selectedCategory) && isset($selectedProduct)){
                                 echo "<div class='p-3'>";
                                     echo "<div class='px-3 productItem productDetail'>";
-                                        echo "<div class='pl-4 productTitle'>".$selectedProduct->title->title."</div>";
+                                        echo "<div class='pl-4 productTitle'>".$selectedProduct->title."</div>";
                                         echo "<div class='pl-3 productCode'>Réf: ".$selectedProduct->code."</div>";
-                                        echo "<div class='productDescription'>".$selectedProduct->title->small_description."</div>";
+                                        echo "<div class='productDescription'>".$selectedProduct->small_description."</div>";
                                         
                                         echo "<div class='row row-nested row-eq-height'>";
                                             echo "<div class='col-lg-4'>";
                                                 $productImage = "productImages/".$selectedProduct->code."_photoppale.jpg";
                                                 $imgSrc = file_exists($productImage)?$productImage:"productImages/noProductImage.jpg";
                                                 echo "<img class='img-fluid mx-auto d-block' src='".$imgSrc."'"
-                                                    ."alt='".$selectedProduct->title->title."'" 
-                                                    ."title='".$selectedProduct->title->title."'"
+                                                    ."alt='".$selectedProduct->title."'" 
+                                                    ."title='".$selectedProduct->title."'"
                                                     ."/>";
                                             echo "</div>";
                                             echo "<div class='col-lg productPanel'>";
-                                                if(isset($selectedProduct->variant) && $selectedProduct->variant && $selectedProduct->variant->types){
-                                                    foreach($selectedProduct->variant->types as $variantType){
+                                                if(!empty($selectedProduct->variant_types)){
+                                                    foreach($selectedProduct->variant_types as $variantType){
                                                         echo "<div class='productVariant'>";
-                                                            echo "<div class='variantTitle'>".$variantType->name->name.":</div>";
+                                                            echo "<div class='variantTitle'>".$variantType->name.":</div>";
                                                             echo "<ul class='pl-2'>";
                                                                 foreach($variantType->values as $variantValue){
                                                                     $variantValueClass = "";
-                                                                    if($selectedProduct->id == $variantValue->product_variant_value->product_id){
+                                                                    $disabledLinkClass = "";
+                                                                    $targetProductId;
+                                                                    if($variantValue->product_id == null){
+                                                                        $disabledLinkClass = "disabledLink";
+                                                                        $targetProductId = null;
+                                                                    } else if($variantType->selectedValueId == $variantValue->id){
                                                                         $variantValueClass = "active";
+                                                                        $targetProductId = $selectedProduct->id;
+                                                                    } else {
+                                                                        $targetProductId = $variantValue->product_id;
                                                                     }
-                                                                    echo "<li class='px-1 m-1 ".$variantValueClass."'"
-                                                                        ."title='".$variantType->name->name.": ".$variantValue->name->name."'>";
-                                                                        echo "<a href='".changeParam("productId", $variantValue->product_variant_value->product_id)."'>".$variantValue->name->name."</a>";
+                                                                    echo "<li class='px-1 m-1 ".$variantValueClass." ".$disabledLinkClass."'"."title='".$variantType->name.": ".$variantValue->name."'>";
+                                                                        if ($targetProductId == null) {
+                                                                            echo $variantValue->name;
+                                                                        } else {
+                                                                            echo "<a href='".changeParam("productId", $targetProductId)."'>".$variantValue->name."</a>";
+                                                                        }
+                                                                        //echo "<a href=''>".$variantValue->name."</a>";
                                                                     echo "</li>";
                                                                 }
                                                             echo "</ul>";
@@ -217,7 +225,7 @@
                                                     }
                                                 }
                                                 echo "<div class='mt-5'>";
-                                                    echo "<div class='text-right m-3 productPrice'>".$selectedProduct->price->price." chf</div>";
+                                                    echo "<div class='text-right m-3 productPrice'>".$selectedProduct->price." chf</div>";
                                                 echo "</div>";
                                             echo "</div>";
                                         echo "</div>";
@@ -248,13 +256,24 @@
                                                             echo "<ul class='pl-2'>";
                                                                 foreach($variantType->values as $variantValue){
                                                                     $variantValueClass = "";
-                                                                    //if($product->id == $variantValue->product_variant_value->product_id){
-                                                                    //    $variantValueClass = "active";
-                                                                    //}
-                                                                    echo "<li class='px-1 m-1 ".$variantValueClass."'"
-                                                                        ."title='".$variantType->name.": ".$variantValue->name."'>";
-                                                                        //echo "<a href='".changeParam("productId", $variantValue->product_variant_value->product_id)."'>".$variantValue->name."</a>";
-                                                                        echo "<a href=''>".$variantValue->name."</a>";
+                                                                    $disabledLinkClass = "";
+                                                                    $targetProductId;
+                                                                    if ($variantValue->product_id == null) {
+                                                                        $disabledLinkClass = "disabledLink";
+                                                                        $targetProductId = null;
+                                                                    } else if($variantType->selectedValueId == $variantValue->id) {
+                                                                        $variantValueClass = "active";
+                                                                        $targetProductId = $product->id;
+                                                                    } else {
+                                                                        $targetProductId = $variantValue->product_id;
+                                                                    }
+                                                                    echo "<li class='px-1 m-1 ".$variantValueClass."'"."title='".$variantType->name.": ".$variantValue->name."'>";
+                                                                        if($targetProductId == null){
+                                                                            echo $variantValue->name;
+                                                                        } else {
+                                                                            echo "<a href='".changeParam("productId", $targetProductId)."' class='".$disabledLinkClass."'>".$variantValue->name."</a>";
+                                                                            //echo "<a href=''>".$variantValue->name."</a>";
+                                                                        }
                                                                     echo "</li>";
                                                                 }
                                                             echo "</ul>";
