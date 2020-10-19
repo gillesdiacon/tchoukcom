@@ -1,4 +1,4 @@
-            <div id="header" class="masthead mb-3 row row-eq-height no-gutters">
+            <div id="header" class="masthead mb-3 row row-eq-height">
                 <div class="col-1"></div>
                 <div id="bannerLogo" class="text-left col-md-auto pt-3">
                     <a href="http://tchouk.com/index.php" title="Tchoukball Promotion">
