@@ -3,6 +3,10 @@
 class ProductService extends DbService {
     
     public $priceListId = 1;
+    
+    function __construct() {
+        parent::__construct();
+    }
 
     function getAllProductsByCategoryId($categoryId, $langId){
         $simpleProducts = $this->getProductsByCategoryId($categoryId, $langId, "simple");

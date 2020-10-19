@@ -1,9 +1,8 @@
 <?php
     require_once("init.php");
     
-    $dbService = new DbService();
-    $categoryService = new CategoryService($dbService);
-    $productService = new ProductService($dbService);
+    $productService = new ProductService();
+    $categoryService = new CategoryService($productService);
     
     $langId = getLangId($lang);
     

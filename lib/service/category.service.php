@@ -2,7 +2,13 @@
 
 class CategoryService extends DbService {
     
-    //protected productService = new ProductService($dbService);
+    var $productService;
+    
+    function __construct($productServiceParam) {
+        parent::__construct();
+        
+        $this->productService = $productServiceParam;
+    }
 
     function getCategoriesByParentId($categoryParentId, $langId){
         $query  = "select id, parent_id, name, description, image_filename from category ";
@@ -53,8 +59,7 @@ class CategoryService extends DbService {
                 $nbProducts += $this->recursiveGetNbProducts($subCategory->id, $langId);
             }
         }else{
-            $productService = new ProductService($this);
-            $nbProducts = count($productService->getAllProductsByCategoryId($categoryId, $langId));
+            $nbProducts = count($this->productService->getAllProductsByCategoryId($categoryId, $langId));
         }
 
         return $nbProducts;
