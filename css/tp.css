@@ -81,6 +81,7 @@ a, a:hover {
 #globalMenu ul li .pageTitleCenterAct {
     background-image: url("../images/pageTitle_center_act.png");
     background-position: right center;
+    font-size: 1rem;
 }
 
 #globalMenu ul li .pageTitleCenterNo {
