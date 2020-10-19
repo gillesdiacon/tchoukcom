@@ -4,6 +4,13 @@ class ProductService extends DbService {
     
     public $priceListId = 1;
 
+    function getAllProductsByCategoryId($categoryId, $langId){
+        $simpleProducts = $this->getProductsByCategoryId($categoryId, $langId, "simple");
+        $variantProducts = $this->getProductsByCategoryId($categoryId, $langId, "variant");
+
+        return array_merge($simpleProducts, $variantProducts);
+    }
+    
     function getProductsByCategoryId($categoryId, $langId, $productType){
         $query  = "select id, category_id, code, variant_id, title, small_description, description, price from product ";
         $query .= "join product_i18n on (product_i18n.product_id=product.id) ";

@@ -16,7 +16,7 @@
 
     // get selected category
     $selectedCategory = $categoryService->getCategoryById($selectedCategoryId, $langId);
-    $selectedCategory->sub_categories = $categoryService->getCategoriesByParentId($selectedCategoryId, $langId);
+    $selectedCategory->sub_categories = $categoryService->getCategoriesByParentIdWithNbProd($selectedCategoryId, $langId);
     
     // get sub categories
     $subCategories = array();
@@ -31,10 +31,7 @@
     // get products
     $products;
     if(isset($selectedCategory) && !$selectedCategory->sub_categories){
-        $simpleProducts = $productService->getProductsByCategoryId($selectedCategory->id, $langId, "simple");
-        $variantProducts = $productService->getProductsByCategoryId($selectedCategory->id, $langId, "variant");
-
-        $products = array_merge($simpleProducts, $variantProducts);
+        $products = $productService->getAllProductsByCategoryId($selectedCategory->id, $langId);
         
         // oder by id
         usort(

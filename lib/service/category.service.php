@@ -1,6 +1,8 @@
 <?php
 
 class CategoryService extends DbService {
+    
+    //protected productService = new ProductService($dbService);
 
     function getCategoriesByParentId($categoryParentId, $langId){
         $query  = "select id, parent_id, name, description, image_filename from category ";
@@ -12,7 +14,17 @@ class CategoryService extends DbService {
         
         $result = $this->mysqli->query($query) or die("error with table category");
         $categories = parent::fillObjectWithSQLResult("Category",$result);
-
+        
+        return $categories;
+    }
+    
+    function getCategoriesByParentIdWithNbProd($categoryParentId, $langId){
+        $categories = $this->getCategoriesByParentId($categoryParentId, $langId);
+        
+        foreach($categories as $category){
+            $category->nb_products = $this->recursiveGetNbProducts($category->id, $langId);
+        }
+        
         return $categories;
     }
 
@@ -28,6 +40,24 @@ class CategoryService extends DbService {
         $categories = parent::fillObjectWithSQLResult("Category",$result);
 
         return $categories[0];
+    }
+
+    function recursiveGetNbProducts($categoryId, $langId){
+        $subCategories = $this->getCategoriesByParentId($categoryId, $langId);
+
+        $nbProducts = 0;
+        if(count($subCategories) > 0){
+            // there are some sub categories
+            // sum nb product for each sub category
+            foreach($subCategories as $subCategory){
+                $nbProducts += $this->recursiveGetNbProducts($subCategory->id, $langId);
+            }
+        }else{
+            $productService = new ProductService($this);
+            $nbProducts = count($productService->getAllProductsByCategoryId($categoryId, $langId));
+        }
+
+        return $nbProducts;
     }
 
 }
