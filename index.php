@@ -361,12 +361,24 @@
                 </nav>
             -->
             
+            <?php
+                $agb_fr = "Conditions g&eacute;n&eacute;rales de vente";
+                $agb_de = "Allgemeine Gesch&auml;ftsbedingungen";
+                $agb_en = "General terms and conditions";
+                $agb_it = "Condizioni generali di vendita";
+                
+                $contact_fr = "Contact";
+                $contact_de = "Kontakt";
+                $contact_en = "Contact";
+                $contact_it = "Contatto";
+            ?>
+            
             <footer id="footer" class="px-3 mt-5">
                 <p class="text-muted p-1">&copy;&nbsp;Tchoukball&nbsp;Promotion
-                    &nbsp;-&nbsp;
-                    <a href="conditions.html">Conditions g&eacute;n&eacute;rales de vente</a>
-                    &nbsp;-&nbsp;
-                    <a href="contact.html">Contact</a></p>
+                    &nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="conditions.html<?php if($lang!="fr"){echo"?lang=".$lang;}?>"><?php echo ${'agb_' . $lang} ?></a>
+                    &nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="contact.html<?php if($lang!="fr"){echo"?lang=".$lang;}?>"><?php echo ${'contact_' . $lang} ?></a></p>
             </footer>
     
         </div>
