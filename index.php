@@ -2,7 +2,7 @@
     require_once("init.php");
     
     $productService = new ProductService();
-    $categoryService = new CategoryService($productService);
+    $categoryService = new CategoryService();
     
     $langId = getLangId($lang);
     

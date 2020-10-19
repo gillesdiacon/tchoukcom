@@ -2,12 +2,12 @@
 
 class CategoryService extends DbService {
     
-    var $productService;
+    var $productCountService;
     
-    function __construct($productServiceParam) {
+    function __construct() {
         parent::__construct();
         
-        $this->productService = $productServiceParam;
+        $this->productCountService = new ProductCountService();
     }
 
     function getCategoriesByParentId($categoryParentId, $langId){
@@ -59,7 +59,7 @@ class CategoryService extends DbService {
                 $nbProducts += $this->recursiveGetNbProducts($subCategory->id, $langId);
             }
         }else{
-            $nbProducts = count($this->productService->getAllProductsByCategoryId($categoryId, $langId));
+            $nbProducts = $this->productCountService->countAllProductsByCategoryId($categoryId, $langId);
         }
 
         return $nbProducts;

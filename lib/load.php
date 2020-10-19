@@ -4,6 +4,7 @@
 	require_once("lib/db/db.service.php");
 	require_once("lib/service/category.service.php");
 	require_once("lib/service/product.service.php");
+	require_once("lib/service/product.count.service.php");
 	require_once("lib/class/category.class.php");
 	require_once("lib/class/product.class.php");
 	require_once("lib/class/variant.type.class.php");
