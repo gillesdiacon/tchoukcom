@@ -4,7 +4,7 @@
     <head>
         <?php 
             $headTitle = ${'agb_' . $lang};
-            require_once("head.php"); 
+            require_once("head.php");
         ?>
     </head>
     <body>
@@ -12,7 +12,20 @@
         
             <?php require_once("banner.php"); ?>
             
-            <div class="row">
+            <div>
+                <?php
+                
+                if ($lang == "de") {
+                    require_once("conditions_de.php");
+                } else if ($lang == "en") {
+                    require_once("conditions_en.php");
+                } else if ($lang == "it") {
+                    require_once("conditions_it.php");
+                } else {
+                    require_once("conditions_fr.php");
+                }
+            
+                ?>
             </div>
     
             <?php require_once("footer.php"); ?>
