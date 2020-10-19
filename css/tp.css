@@ -25,15 +25,21 @@ a, a:hover {
     margin: 0.3em;
 }
 
-#title {
+.menuTitle_big {
     margin-top: -1px;
     font-size: 2.5rem;
 }
-#title td{
-    padding: 0;
-}
-#title .titleCenter {
+.menuTitle_big .titleCenter {
     background-image: url("../images/titleCenter_big.png");
+    background-position: right center;
+    vertical-align: top;
+}
+.menuTitle {
+    margin-top: -1px;
+    font-size: 1rem;
+}
+.menuTitle .titleCenter {
+    background-image: url("../images/titleCenter.png");
     background-position: right center;
     vertical-align: top;
 }
@@ -83,7 +89,6 @@ a, a:hover {
 }
 
 .categoryCol{
-    padding: 0;
     z-index: 1000;
 }
 
@@ -228,6 +233,10 @@ a, a:hover {
     background: rgba(0, 0, 0, 0) -moz-linear-gradient(center top , #ffffff 0%, #ffffff 60%, #cccccc 100%) repeat scroll 0 0;
     border-radius: 10px;
     box-shadow: 2px 2px 5px #888888;
+}
+
+.addressLabel {
+    color: #F07B0E;
 }
 
 #footer {

@@ -114,17 +114,17 @@
             </div>
             
             <div class="row">
-                <div class="col-2 categoryCol">
+                <div class="col-2 p-0 categoryCol">
                     <div id="categoryMenu" class="box">
-                        <table id="title" class="ml-5">
+                        <table class="menuTitle_big ml-5">
                             <tr>
-                                <td>
+                                <td class="p-0">
                                     <img src="images/titleLeft_big.png" />
                                 </td>
-                                <td class="titleCenter font-italic text-white">
+                                <td class="titleCenter font-italic text-white p-0">
                                     <strong>Shop</strong>
                                 </td>
-                                <td>
+                                <td class="p-0">
                                     <img src="images/titleRight_big.png" />
                                 </td>
                             </tr>
@@ -294,8 +294,46 @@
                         ?>
                     </div>
                 </div>
-                <div class="col-2">
-                
+                <div class="col-2 p-0">
+                    <div class="box">
+                        <table class="menuTitle" class="ml-2">
+                            <tr>
+                                <td class="p-0">
+                                    <img src="images/titleLeft.png" />
+                                </td>
+                                <td class="titleCenter font-italic text-white p-0">
+                                    <strong>Contacts</strong>
+                                </td>
+                                <td class="p-0">
+                                    <img src="images/titleRight.png" />
+                                </td>
+                            </tr>
+                        </table>
+
+                        <div class="addressBox font-weight-bold p-2">
+                            <div class="addressPhone">
+                                <span class="addressLabel">T:&nbsp;</span>+41 (0) 22 368 00 41
+                            </div>
+                            <div class="addressFax">
+                                <span class="addressLabel">F:&nbsp;</span>+41 (0) 22 368 00 28
+                            </div>
+                            <div class="addressEmail">
+                                <span class="addressLabel">@:&nbsp;</span>info@tchouk.com
+                            </div>
+                        </div>
+
+                        <div class="addressBox p-2">
+                            <div class="addressLabel">Tchoukball Promotion</div>
+                            <div>3, avenue Edmond Vaucher</div>
+                            <div>1219 Châtelaine, Suisse</div>
+                        </div>
+
+                        <div class="addressBox p-2">
+                            <div class="addressLabel">Tchoukball Promotion Europe</div>
+                            <div>606, chemin des Hautins</div>
+                            <div>01280 Prévessin Moens, France</div>
+                        </div>
+                    </div>
                 </div>
             </div>
             
