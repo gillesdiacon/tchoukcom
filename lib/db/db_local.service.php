@@ -5,8 +5,8 @@ class DbService {
     public $mysqli;
 
     public function __construct(){
-        $this->mysqli = new mysqli("localhost", "tchoukcom", "mxCh7WzsI3yOb0TF");
-        $this->mysqli->select_db("tchoukcom");
+        $this->mysqli = new mysqli("localhost", "ktt_tchoukshop", "mxCh7WzsI3yOb0Tk");
+        $this->mysqli->select_db("ktt_tchoukshop");
         $this->mysqli->set_charset("utf8");
     }
 

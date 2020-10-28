@@ -125,12 +125,21 @@ a, a:hover {
     padding: 5px;
 }
 .categoryItem {
-    background: rgba(0, 0, 0, 0) -moz-linear-gradient(center top , #ffffff 0%, #ffffff 60%, #cccccc 100%) repeat scroll 0 0;
     border-radius: 20px;
     box-shadow: 2px 2px 5px #888888;
     height: 100%;
     padding: 5px;
     text-align: center;
+
+    background: #ffffff; /* Old browsers */
+    background: -moz-linear-gradient(top, #ffffff 0%, #ffffff 60%, #cccccc 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(60%,#ffffff), color-stop(100%,#cccccc)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #ffffff 0%,#ffffff 60%,#cccccc 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #ffffff 0%,#ffffff 60%,#cccccc 100%); /* Opera11.10+ */
+    background: -ms-linear-gradient(top, #ffffff 0%,#ffffff 60%,#cccccc 100%); /* IE10+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#cccccc',GradientType=0 ); /* IE6-9 */
+    background: linear-gradient(top, #ffffff 0%,#ffffff 60%,#cccccc 100%); /* W3C */
+}
 }
 .categoryItem a:hover > .categoryName,
 .productItem a:active > .categoryName {
@@ -154,11 +163,19 @@ a, a:hover {
     padding: 5px;
 }
 .productItem {
-    background: rgba(0, 0, 0, 0) -moz-linear-gradient(center top , #ffffff 0%, #ffffff 60%, #cccccc 100%) repeat scroll 0 0;
     border-radius: 20px;
     box-shadow: 2px 2px 5px #888888;
     height: 100%;
     padding: 5px;
+
+    background: #ffffff; /* Old browsers */
+    background: -moz-linear-gradient(top, #ffffff 0%, #ffffff 60%, #cccccc 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(60%,#ffffff), color-stop(100%,#cccccc)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #ffffff 0%,#ffffff 60%,#cccccc 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #ffffff 0%,#ffffff 60%,#cccccc 100%); /* Opera11.10+ */
+    background: -ms-linear-gradient(top, #ffffff 0%,#ffffff 60%,#cccccc 100%); /* IE10+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#cccccc',GradientType=0 ); /* IE6-9 */
+    background: linear-gradient(top, #ffffff 0%,#ffffff 60%,#cccccc 100%); /* W3C */
 }
 .productItem img{
     width: 80%;
@@ -224,16 +241,31 @@ a, a:hover {
 }
 
 .productDetail {
-    background: rgba(0, 0, 0, 0) -moz-linear-gradient(center top , #cccccc 0%, #ffffff 60%, #ffffff 100%) repeat scroll 0 0;   
+    background: #cccccc; /* Old browsers */
+    background: -moz-linear-gradient(top, #cccccc 0%, #ffffff 60%, #ffffff 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#cccccc), color-stop(60%,#ffffff), color-stop(100%,#ffffff)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #cccccc 0%,#ffffff 60%,#ffffff 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #cccccc 0%,#ffffff 60%,#ffffff 100%); /* Opera11.10+ */
+    background: -ms-linear-gradient(top, #cccccc 0%,#ffffff 60%,#ffffff 100%); /* IE10+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cccccc', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+    background: linear-gradient(top, #cccccc 0%,#ffffff 60%,#ffffff 100%); /* W3C */
 }
 .productDetail .productTitle {
     font-size: 140%;
     color: #f07b0e;
 }
 .productDetail .productPanel {
-    background: rgba(0, 0, 0, 0) -moz-linear-gradient(center top , #ffffff 0%, #ffffff 60%, #cccccc 100%) repeat scroll 0 0;
     border-radius: 10px;
     box-shadow: 2px 2px 5px #888888;
+    
+    background: #ffffff; /* Old browsers */
+    background: -moz-linear-gradient(top, #ffffff 0%, #ffffff 60%, #cccccc 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(60%,#ffffff), color-stop(100%,#cccccc)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #ffffff 0%,#ffffff 60%,#cccccc 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #ffffff 0%,#ffffff 60%,#cccccc 100%); /* Opera11.10+ */
+    background: -ms-linear-gradient(top, #ffffff 0%,#ffffff 60%,#cccccc 100%); /* IE10+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#cccccc',GradientType=0 ); /* IE6-9 */
+    background: linear-gradient(top, #ffffff 0%,#ffffff 60%,#cccccc 100%); /* W3C */
 }
 
 .addressLabel {
